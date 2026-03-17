@@ -515,8 +515,29 @@ div[class*="elfsight-app-lazy"] + a {
   .garansi-box h2 { font-size: 1.5rem; }
   .cta h2 { font-size: 1.75rem; }
   .grid { grid-template-columns: repeat(2, 1fr); } /* 2 columns on tablet */
+  
+  /* Mobile adjustments for Logo and Company Name */
+  .Logo {
+    height: 40px; /* Reduced from 50px */
+  }
+  .company-name {
+    font-size: 1rem; /* Reduced from 1.25rem */
+    white-space: normal; /* Allow wrapping if necessary */
+    line-height: 1.2;
+  }
+  .nav-content {
+    flex-wrap: wrap; /* Allow items to wrap on very small screens */
+    gap: 0.5rem;
+  }
+  .cta-top {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.7rem;
+  }
 }
 
 @media (max-width: 480px) {
   .grid { grid-template-columns: 1fr; } /* 1 column on mobile */
+  .company-name {
+    font-size: 0.9rem; /* Further reduced for small mobile */
+  }
 }
