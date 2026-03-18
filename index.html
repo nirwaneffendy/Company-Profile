@@ -12,6 +12,24 @@
   <!-- Fonts & Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="style.css">
+  
+  <script>
+    // Silencing browser-internal errors from the console
+    window.addEventListener('error', function(event) {
+      if (event.filename && event.filename.includes('webpage_content_reporter.js')) {
+        event.stopImmediatePropagation();
+      }
+    }, true);
+    
+    // Additional check for SyntaxErrors in specific internal scripts
+    const originalConsoleError = console.error;
+    console.error = function() {
+      if (arguments[0] && typeof arguments[0] === 'string' && arguments[0].includes('webpage_content_reporter.js')) {
+        return;
+      }
+      originalConsoleError.apply(console, arguments);
+    };
+  </script>
 </head>
 
 <body>
