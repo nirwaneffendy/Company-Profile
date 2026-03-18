@@ -375,6 +375,21 @@ footer {
   text-align: center;
 }
 
+.visitor-counter {
+  text-align: center;
+  margin-top: 2rem;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.visitor-counter:hover {
+  opacity: 1;
+}
+
+.visitor-counter img {
+  border-radius: 4px;
+}
+
 /* FLOAT WA */
 .wa {
   position: fixed;
