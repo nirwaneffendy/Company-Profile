@@ -79,6 +79,10 @@ const hideBranding = () => {
   });
 };
 
-// Check for branding periodically
-setInterval(hideBranding, 1000);
-window.addEventListener('load', hideBranding);
+// Check for branding periodically - Optimized interval
+let brandingInterval = setInterval(hideBranding, 3000); // Increased from 1000ms
+window.addEventListener('load', () => {
+  hideBranding();
+  // Stop interval after 15 seconds to save resources
+  setTimeout(() => clearInterval(brandingInterval), 15000);
+});
