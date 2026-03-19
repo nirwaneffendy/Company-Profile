@@ -87,76 +87,45 @@ window.addEventListener('load', () => {
   setTimeout(() => clearInterval(brandingInterval), 15000);
 });
 
-// REAL-TIME VISITOR COUNTER (STATIC SITE COMPATIBLE - V3 STABLE)
-const updateVisitorCount = async () => {
-  const visitorElement = document.getElementById('visitor-count');
-  if (!visitorElement) return;
+// --- ACCURATE UNIQUE VISITOR COUNTER (v4 - FINAL) ---
+const visitorElement = document.getElementById('visitor-count');
+const apiKey = 'company-profile-unique'; // New key for a fresh start
+const namespace = 'nirwaneffendy';
+const storageKey = 'hasVisited_' + apiKey;
 
+// Function to fetch and display the count
+const getCount = async () => {
   try {
-    // CountAPI (api.countapi.xyz) is currently unstable/down. 
-    // Switching to counterapi.dev (More stable replacement)
-    // Namespace: nirwaneffendy, Key: company-profile
-    // HOTFIX: Using HTTPS to prevent mixed content error
-    const response = await fetch('https://api.counterapi.dev/v1/nirwaneffendy/company-profile/up');
-    
-    if (response.ok) {
-      const data = await response.json();
-      const newCount = data.count; // CounterAPI.dev returns { "count": X }
-      const currentCountText = visitorElement.innerText.replace(/,/g, '');
-      const currentCount = parseInt(currentCountText) || 0;
-      
-      if (newCount !== currentCount) {
-        // No padding for minimalist theme
-        animateValue(visitorElement, currentCount, newCount, 1000, false);
-      } else if (visitorElement.innerText === '0') {
-        visitorElement.innerText = newCount;
-      }
-    } else {
-      // API responded but with error
-      throw new Error('API Response Error');
-    }
+    const response = await fetch(`https://api.counterapi.dev/v1/${namespace}/${apiKey}/`);
+    if (!response.ok) throw new Error('Failed to fetch count');
+    const data = await response.json();
+    if (visitorElement) visitorElement.innerText = data.count;
   } catch (error) {
-    // Graceful Fallback: If API fails, show a starting number so it's not 0
-    if (visitorElement.innerText === '00000') {
-      visitorElement.innerText = '01501';
-    }
-    // Only log error once to avoid console flooding
-    if (!window.apiErrorLogged) {
-      console.warn('Visitor API is currently unreachable. Using fallback value.');
-      window.apiErrorLogged = true;
-    }
+    console.warn('Visitor count is currently unavailable.');
+    if (visitorElement) visitorElement.innerText = 'N/A';
   }
 };
 
-// Update current time in dashboard
-const updateDashTime = () => {
-  const timeElement = document.getElementById('current-time');
-  if (timeElement) {
-    const now = new Date();
-    timeElement.innerText = now.toTimeString().split(' ')[0];
+// Function to increment the count (only for new visitors)
+const incrementCount = async () => {
+  try {
+    const response = await fetch(`https://api.counterapi.dev/v1/${namespace}/${apiKey}/up`);
+    if (!response.ok) throw new Error('Failed to increment count');
+    const data = await response.json();
+    if (visitorElement) visitorElement.innerText = data.count;
+    // Mark as visited
+    localStorage.setItem(storageKey, 'true');
+  } catch (error) {
+    console.warn('Could not update visitor count.');
+    getCount(); // Still try to get the latest count
   }
 };
 
-// Helper function to animate number change
-function animateValue(obj, start, end, duration, usePadding = true) {
-  let startTimestamp = null;
-  const step = (timestamp) => {
-    if (!startTimestamp) startTimestamp = timestamp;
-    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-    const value = Math.floor(progress * (end - start) + start);
-    // Pad with zeros only if required
-    obj.innerText = usePadding ? String(value).padStart(5, '0') : value;
-    if (progress < 1) {
-      window.requestAnimationFrame(step);
-    }
-  };
-  window.requestAnimationFrame(step);
+// Main logic execution
+if (localStorage.getItem(storageKey)) {
+  // It's a returning visitor, just get the count
+  getCount();
+} else {
+  // It's a new visitor, increment the count
+  incrementCount();
 }
-
-// Initial calls
-updateVisitorCount();
-updateDashTime();
-
-// Intervals
-setInterval(updateVisitorCount, 5000); // Poll server every 5s
-setInterval(updateDashTime, 1000);    // Update clock every 1s
