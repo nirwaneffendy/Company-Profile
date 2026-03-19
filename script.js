@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Increment immediately when a new visitor (or refresh) hits the page
     incrementOnLoad();
 
-    // 2. Poll the server every 5 seconds to keep the count "real-time" across all open devices
-    // If someone visits on Mobile, the Desktop will update automatically in 5 seconds.
-    setInterval(fetchCurrentCount, 5000);
+    // 2. Poll the server every 1 second to keep the count "real-time" across all open devices
+    // If someone visits on Mobile, the Desktop will update automatically in 1 second.
+    setInterval(fetchCurrentCount, 1000);
 });
