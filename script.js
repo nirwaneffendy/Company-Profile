@@ -93,6 +93,8 @@ window.addEventListener('load', () => {
 const visitorElement = document.getElementById('visitor-count');
 const namespace = 'nirwan-computer-official';
 const key = 'nirwan-v7-realtime';
+let pollInterval;
+let errorCount = 0;
 
 // Function to fetch the current total count (WITHOUT incrementing)
 async function fetchCurrentCount() {
@@ -103,9 +105,20 @@ async function fetchCurrentCount() {
             const data = await response.json();
             if (data && typeof data.count !== 'undefined') {
                 visitorElement.innerText = data.count;
+                errorCount = 0; // Reset error count on success
             }
+        } else if (response.status === 429) {
+            // If rate limited (Too Many Requests), slow down or stop
+            console.warn('Rate limit exceeded. Slowing down updates.');
+            clearInterval(pollInterval);
+            pollInterval = setInterval(fetchCurrentCount, 30000); // Slow down to 30s
         }
-    } catch (e) {}
+    } catch (e) {
+        errorCount++;
+        if (errorCount > 5) {
+            clearInterval(pollInterval); // Stop polling if it fails too many times
+        }
+    }
 }
 
 // Function to increment once on page load
@@ -129,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Increment immediately when a new visitor (or refresh) hits the page
     incrementOnLoad();
 
-    // 2. Poll the server every 1 second to keep the count "real-time" across all open devices
-    // If someone visits on Mobile, the Desktop will update automatically in 1 second.
-    setInterval(fetchCurrentCount, 1000);
+    // 2. Poll the server every 10 seconds to keep the count "real-time"
+    // Using 10s to avoid '429 Too Many Requests' error from the free API provider
+    pollInterval = setInterval(fetchCurrentCount, 10000);
 });
