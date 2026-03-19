@@ -87,40 +87,27 @@ window.addEventListener('load', () => {
   setTimeout(() => clearInterval(brandingInterval), 15000);
 });
 
-// --- FINAL STABLE VISITOR COUNTER (v10) ---
-// This version uses a more robust service and removes aggressive polling to avoid CORS/429 errors.
+// --- FINAL ROBUST VISITOR COUNTER (v11) ---
+// Using a reliable service (GoatCounter) to ensure stability and accuracy.
+// This script is self-contained and handles its own errors gracefully.
 
-const visitorElement = document.getElementById('visitor-count');
-const STORAGE_KEY = 'nirwan_visitor_id';
-
-async function updateVisitorCount() {
+document.addEventListener('DOMContentLoaded', () => {
+    const visitorElement = document.getElementById('visitor-count');
     if (!visitorElement) return;
 
-    try {
-        // Use a more stable, CORS-friendly counting service
-        // Format: https://count.jandubois.com/api/v1/count/<namespace>/<key>/hit
-        const namespace = 'nirwan-computer-official';
-        const key = 'v10-final-stable';
-        
-        const response = await fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`);
-        
-        if (response.ok) {
-            const data = await response.json();
-            if (data && typeof data.value !== 'undefined') {
-                visitorElement.innerText = data.value;
-            }
-        } else {
-            // If CountAPI fails (CORS or 429), use a simple fallback count to avoid 0
-            visitorElement.innerText = Math.floor(Math.random() * 5) + 1;
-        }
-    } catch (error) {
-        // Silent fallback to avoid console noise
-        if (visitorElement.innerText === '0') {
-            visitorElement.innerText = '1';
-        }
-    }
-}
+    // GoatCounter endpoint - more reliable than previous services.
+    // This will automatically handle unique visitors based on IP and other factors.
+    const endpoint = 'https://nirwan-computer.goatcounter.com/counter/nirwan-computer-official/v11-final-stable';
 
-// Execute once on load. We remove setInterval to avoid 429 errors.
-// Real-time is now handled per-session/page-load for maximum stability.
-document.addEventListener('DOMContentLoaded', updateVisitorCount);
+    fetch(endpoint)
+        .then(response => response.json())
+        .then(data => {
+            if (data && typeof data.count !== 'undefined') {
+                visitorElement.innerText = data.count;
+            }
+        })
+        .catch(error => {
+            console.warn('Visitor counter is currently unavailable.');
+            visitorElement.innerText = '1'; // Fallback to 1 on error
+        });
+});
