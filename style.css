@@ -375,19 +375,103 @@ footer {
   text-align: center;
 }
 
-.visitor-counter {
-  text-align: center;
-  margin-top: 2rem;
-  opacity: 0.8;
-  transition: opacity 0.3s ease;
-}
-
-.visitor-counter:hover {
-  opacity: 1;
-}
-
-.visitor-counter img {
+.visitor-dashboard {
+  max-width: 320px;
+  margin: 3rem auto 1rem;
+  background: #000;
+  border: 1px solid #1e3a8a;
   border-radius: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(30, 58, 138, 0.3);
+}
+
+.dash-header {
+  background: #1e3a8a;
+  padding: 6px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.7rem;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+.dash-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #10b981;
+  font-weight: 700;
+}
+
+.pulse-dot {
+  width: 6px;
+  height: 6px;
+  background: #10b981;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #10b981;
+  animation: pulse-live 1.5s infinite;
+}
+
+.dash-body {
+  padding: 1.5rem;
+  background: linear-gradient(180deg, #050a14 0%, #000 100%);
+  position: relative;
+}
+
+.dash-body::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(0deg, rgba(0,0,0,0.15) 0px, rgba(0,0,0,0.15) 1px, transparent 1px, transparent 2px);
+  pointer-events: none;
+}
+
+.stat-group {
+  text-align: center;
+}
+
+.stat-group label {
+  display: block;
+  font-size: 0.65rem;
+  color: #3b82f6;
+  margin-bottom: 0.5rem;
+  opacity: 0.8;
+}
+
+.stat-value {
+  font-size: 2.5rem;
+  color: #fff;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+  letter-spacing: 2px;
+}
+
+.dash-footer {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px dashed rgba(30, 58, 138, 0.3);
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.6rem;
+  color: #3b82f6;
+  opacity: 0.7;
+}
+
+@keyframes pulse-live {
+  0% { opacity: 1; }
+  50% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+
+@media (max-width: 480px) {
+  .visitor-dashboard {
+    max-width: 280px;
+  }
+  .stat-value {
+    font-size: 2rem;
+  }
 }
 
 /* FLOAT WA */

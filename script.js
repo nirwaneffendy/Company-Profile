@@ -86,3 +86,72 @@ window.addEventListener('load', () => {
   // Stop interval after 15 seconds to save resources
   setTimeout(() => clearInterval(brandingInterval), 15000);
 });
+
+// REAL-TIME VISITOR COUNTER (STATIC SITE COMPATIBLE)
+const updateVisitorCount = async () => {
+  const visitorElement = document.getElementById('visitor-count');
+  if (!visitorElement) return;
+
+  try {
+    // Since GitHub Pages is static and doesn't support PHP, 
+    // we use a public API to track and increment visitors.
+    // Using CountAPI (namespace: nirwaneffendy, key: company-profile)
+    const response = await fetch('https://api.countapi.xyz/hit/nirwaneffendy/company-profile');
+    
+    if (response.ok) {
+      const data = await response.json();
+      const newCount = data.value;
+      const currentCount = parseInt(visitorElement.innerText.replace(/,/g, ''));
+      
+      if (newCount !== currentCount) {
+        animateValue(visitorElement, currentCount, newCount, 1000);
+      } else if (visitorElement.innerText === '00000') {
+        visitorElement.innerText = String(newCount).padStart(5, '0');
+      }
+    } else {
+      // Fallback if API is down: use a default starting number
+      if (visitorElement.innerText === '00000') {
+        visitorElement.innerText = '01501';
+      }
+    }
+  } catch (error) {
+    console.error('Error fetching visitor count:', error);
+    // Silent fallback
+    if (visitorElement.innerText === '00000') {
+      visitorElement.innerText = '01501';
+    }
+  }
+};
+
+// Update current time in dashboard
+const updateDashTime = () => {
+  const timeElement = document.getElementById('current-time');
+  if (timeElement) {
+    const now = new Date();
+    timeElement.innerText = now.toTimeString().split(' ')[0];
+  }
+};
+
+// Helper function to animate number change
+function animateValue(obj, start, end, duration) {
+  let startTimestamp = null;
+  const step = (timestamp) => {
+    if (!startTimestamp) startTimestamp = timestamp;
+    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+    const value = Math.floor(progress * (end - start) + start);
+    // Pad with zeros
+    obj.innerText = String(value).padStart(5, '0');
+    if (progress < 1) {
+      window.requestAnimationFrame(step);
+    }
+  };
+  window.requestAnimationFrame(step);
+}
+
+// Initial calls
+updateVisitorCount();
+updateDashTime();
+
+// Intervals
+setInterval(updateVisitorCount, 5000); // Poll server every 5s
+setInterval(updateDashTime, 1000);    // Update clock every 1s
