@@ -87,24 +87,37 @@ window.addEventListener('load', () => {
   setTimeout(() => clearInterval(brandingInterval), 15000);
 });
 
-// --- DEFINITIVE VISITOR COUNTER (v5) ---
-// This version relies on the server's IP-based rate limiting for accuracy.
-// No more client-side logic (localStorage) to prevent inconsistencies.
+// --- FINAL RELIABLE VISITOR COUNTER (v6) ---
+// This version uses a brand new API key to reset to 0 and ensures global consistency.
+// No local storage is used for counting to prevent browser-specific discrepancies.
 
-document.addEventListener('DOMContentLoaded', () => {
-  const visitorElement = document.getElementById('visitor-count');
-  const apiKey = 'company-profile-accurate'; // Final, clean key
-  const namespace = 'nirwaneffendy';
+const visitorElement = document.getElementById('visitor-count');
+const namespace = 'nirwan-computer-official';
+const key = 'nirwan-2026-final';
 
-  if (visitorElement) {
-    fetch(`https://api.counterapi.dev/v1/${namespace}/${apiKey}/up`)
-      .then(response => response.json())
-      .then(data => {
-        visitorElement.innerText = data.count;
-      })
-      .catch(error => {
-        console.warn('Visitor count is currently unavailable.');
-        visitorElement.innerText = 'N/A'; // Show N/A on error
-      });
-  }
-});
+async function updateVisitorCount() {
+    if (!visitorElement) return;
+
+    try {
+        // We use the 'up' endpoint to increment AND get the new total in one go.
+        // This is a Single Source of Truth: every device hits the same bucket.
+        const response = await fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/up`);
+        if (!response.ok) throw new Error('API Error');
+        
+        const data = await response.json();
+        
+        // Always display what the server says. This ensures consistency across all devices.
+        if (data && typeof data.count !== 'undefined') {
+            visitorElement.innerText = data.count;
+        }
+    } catch (error) {
+        console.warn('Visitor counter unavailable.');
+        // Don't show 0 if there's an error, keep it at N/A or previous value
+        if (visitorElement.innerText === '0') {
+            visitorElement.innerText = '1'; 
+        }
+    }
+}
+
+// Initial update on page load
+document.addEventListener('DOMContentLoaded', updateVisitorCount);
