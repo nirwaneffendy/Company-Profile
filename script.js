@@ -87,45 +87,24 @@ window.addEventListener('load', () => {
   setTimeout(() => clearInterval(brandingInterval), 15000);
 });
 
-// --- ACCURATE UNIQUE VISITOR COUNTER (v4 - FINAL) ---
-const visitorElement = document.getElementById('visitor-count');
-const apiKey = 'company-profile-unique'; // New key for a fresh start
-const namespace = 'nirwaneffendy';
-const storageKey = 'hasVisited_' + apiKey;
+// --- DEFINITIVE VISITOR COUNTER (v5) ---
+// This version relies on the server's IP-based rate limiting for accuracy.
+// No more client-side logic (localStorage) to prevent inconsistencies.
 
-// Function to fetch and display the count
-const getCount = async () => {
-  try {
-    const response = await fetch(`https://api.counterapi.dev/v1/${namespace}/${apiKey}/`);
-    if (!response.ok) throw new Error('Failed to fetch count');
-    const data = await response.json();
-    if (visitorElement) visitorElement.innerText = data.count;
-  } catch (error) {
-    console.warn('Visitor count is currently unavailable.');
-    if (visitorElement) visitorElement.innerText = 'N/A';
+document.addEventListener('DOMContentLoaded', () => {
+  const visitorElement = document.getElementById('visitor-count');
+  const apiKey = 'company-profile-accurate'; // Final, clean key
+  const namespace = 'nirwaneffendy';
+
+  if (visitorElement) {
+    fetch(`https://api.counterapi.dev/v1/${namespace}/${apiKey}/up`)
+      .then(response => response.json())
+      .then(data => {
+        visitorElement.innerText = data.count;
+      })
+      .catch(error => {
+        console.warn('Visitor count is currently unavailable.');
+        visitorElement.innerText = 'N/A'; // Show N/A on error
+      });
   }
-};
-
-// Function to increment the count (only for new visitors)
-const incrementCount = async () => {
-  try {
-    const response = await fetch(`https://api.counterapi.dev/v1/${namespace}/${apiKey}/up`);
-    if (!response.ok) throw new Error('Failed to increment count');
-    const data = await response.json();
-    if (visitorElement) visitorElement.innerText = data.count;
-    // Mark as visited
-    localStorage.setItem(storageKey, 'true');
-  } catch (error) {
-    console.warn('Could not update visitor count.');
-    getCount(); // Still try to get the latest count
-  }
-};
-
-// Main logic execution
-if (localStorage.getItem(storageKey)) {
-  // It's a returning visitor, just get the count
-  getCount();
-} else {
-  // It's a new visitor, increment the count
-  incrementCount();
-}
+});
