@@ -96,6 +96,7 @@ const updateVisitorCount = async () => {
     // CountAPI (api.countapi.xyz) is currently unstable/down. 
     // Switching to counterapi.dev (More stable replacement)
     // Namespace: nirwaneffendy, Key: company-profile
+    // HOTFIX: Using HTTPS to prevent mixed content error
     const response = await fetch('https://api.counterapi.dev/v1/nirwaneffendy/company-profile/up');
     
     if (response.ok) {
