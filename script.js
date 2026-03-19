@@ -106,9 +106,10 @@ const updateVisitorCount = async () => {
       const currentCount = parseInt(currentCountText) || 0;
       
       if (newCount !== currentCount) {
-        animateValue(visitorElement, currentCount, newCount, 1000);
-      } else if (visitorElement.innerText === '00000') {
-        visitorElement.innerText = String(newCount).padStart(5, '0');
+        // No padding for minimalist theme
+        animateValue(visitorElement, currentCount, newCount, 1000, false);
+      } else if (visitorElement.innerText === '0') {
+        visitorElement.innerText = newCount;
       }
     } else {
       // API responded but with error
@@ -137,14 +138,14 @@ const updateDashTime = () => {
 };
 
 // Helper function to animate number change
-function animateValue(obj, start, end, duration) {
+function animateValue(obj, start, end, duration, usePadding = true) {
   let startTimestamp = null;
   const step = (timestamp) => {
     if (!startTimestamp) startTimestamp = timestamp;
     const progress = Math.min((timestamp - startTimestamp) / duration, 1);
     const value = Math.floor(progress * (end - start) + start);
-    // Pad with zeros
-    obj.innerText = String(value).padStart(5, '0');
+    // Pad with zeros only if required
+    obj.innerText = usePadding ? String(value).padStart(5, '0') : value;
     if (progress < 1) {
       window.requestAnimationFrame(step);
     }
