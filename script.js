@@ -87,27 +87,46 @@ window.addEventListener('load', () => {
   setTimeout(() => clearInterval(brandingInterval), 15000);
 });
 
-// --- FINAL ROBUST VISITOR COUNTER (v11) ---
-// Using a reliable service (GoatCounter) to ensure stability and accuracy.
-// This script is self-contained and handles its own errors gracefully.
+// --- DEFINITIVE VISITOR COUNTER (v12 - STABLE & ACCURATE) ---
+// This version resets to 0 and uses a two-step logic:
+// 1. Increment ONLY ONCE when the page is loaded (up).
+// 2. Poll current count every 15 seconds WITHOUT incrementing (sync).
+
+const visitorElement = document.getElementById('visitor-count');
+const namespace = 'nirwan-computer-official';
+const key = 'v12-final-definitive';
+const baseUrl = `https://api.counterapi.dev/v1/${namespace}/${key}`;
+
+async function incrementAndShow() {
+    if (!visitorElement) return;
+    try {
+        // Step 1: Increment (+1) only on load
+        const response = await fetch(`${baseUrl}/up?t=${Date.now()}`);
+        if (response.ok) {
+            const data = await response.json();
+            visitorElement.innerText = data.count;
+        }
+    } catch (e) {
+        syncOnly(); // Fallback to just getting the count
+    }
+}
+
+async function syncOnly() {
+    if (!visitorElement) return;
+    try {
+        // Step 2: Get current total WITHOUT adding (+0)
+        const response = await fetch(`${baseUrl}/?t=${Date.now()}`);
+        if (response.ok) {
+            const data = await response.json();
+            visitorElement.innerText = data.count;
+        }
+    } catch (e) {}
+}
 
 document.addEventListener('DOMContentLoaded', () => {
-    const visitorElement = document.getElementById('visitor-count');
-    if (!visitorElement) return;
-
-    // GoatCounter endpoint - more reliable than previous services.
-    // This will automatically handle unique visitors based on IP and other factors.
-    const endpoint = 'https://nirwan-computer.goatcounter.com/counter/nirwan-computer-official/v11-final-stable';
-
-    fetch(endpoint)
-        .then(response => response.json())
-        .then(data => {
-            if (data && typeof data.count !== 'undefined') {
-                visitorElement.innerText = data.count;
-            }
-        })
-        .catch(error => {
-            console.warn('Visitor counter is currently unavailable.');
-            visitorElement.innerText = '1'; // Fallback to 1 on error
-        });
+    // Start fresh
+    incrementAndShow();
+    
+    // Sync every 15 seconds to keep all devices updated without hitting rate limits
+    setInterval(syncOnly, 15000);
 });
