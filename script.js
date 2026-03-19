@@ -87,21 +87,22 @@ window.addEventListener('load', () => {
   setTimeout(() => clearInterval(brandingInterval), 15000);
 });
 
-// REAL-TIME VISITOR COUNTER (STATIC SITE COMPATIBLE)
+// REAL-TIME VISITOR COUNTER (STATIC SITE COMPATIBLE - V3 STABLE)
 const updateVisitorCount = async () => {
   const visitorElement = document.getElementById('visitor-count');
   if (!visitorElement) return;
 
   try {
-    // Since GitHub Pages is static and doesn't support PHP, 
-    // we use a public API to track and increment visitors.
-    // Using CountAPI (namespace: nirwaneffendy, key: company-profile)
-    const response = await fetch('https://api.countapi.xyz/hit/nirwaneffendy/company-profile');
+    // CountAPI (api.countapi.xyz) is currently unstable/down. 
+    // Switching to counterapi.dev (More stable replacement)
+    // Namespace: nirwaneffendy, Key: company-profile
+    const response = await fetch('https://api.counterapi.dev/v1/nirwaneffendy/company-profile/up');
     
     if (response.ok) {
       const data = await response.json();
-      const newCount = data.value;
-      const currentCount = parseInt(visitorElement.innerText.replace(/,/g, ''));
+      const newCount = data.count; // CounterAPI.dev returns { "count": X }
+      const currentCountText = visitorElement.innerText.replace(/,/g, '');
+      const currentCount = parseInt(currentCountText) || 0;
       
       if (newCount !== currentCount) {
         animateValue(visitorElement, currentCount, newCount, 1000);
@@ -109,16 +110,18 @@ const updateVisitorCount = async () => {
         visitorElement.innerText = String(newCount).padStart(5, '0');
       }
     } else {
-      // Fallback if API is down: use a default starting number
-      if (visitorElement.innerText === '00000') {
-        visitorElement.innerText = '01501';
-      }
+      // API responded but with error
+      throw new Error('API Response Error');
     }
   } catch (error) {
-    console.error('Error fetching visitor count:', error);
-    // Silent fallback
+    // Graceful Fallback: If API fails, show a starting number so it's not 0
     if (visitorElement.innerText === '00000') {
       visitorElement.innerText = '01501';
+    }
+    // Only log error once to avoid console flooding
+    if (!window.apiErrorLogged) {
+      console.warn('Visitor API is currently unreachable. Using fallback value.');
+      window.apiErrorLogged = true;
     }
   }
 };
