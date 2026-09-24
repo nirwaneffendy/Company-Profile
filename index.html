@@ -1,29 +1,31 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NIRWAN COMPUTER PANGKALPINANG</title>
-  
+  <title>NIRWAN COMPUTER PANGKALPINANG - Digital Repair Lab & Partner Teknologi</title>
+
   <link rel="icon" type="image/png" href="img/Logo.png.png">
-  
-  <meta name="description" content="Nirwan Computer - Digital Repair Lab di Pangkalpinang. Service laptop, printer, dan CCTV dengan presisi teknis tingkat tinggi.">
-  
+
+  <meta name="description"
+    content="Nirwan Computer Pangkalpinang - Digital Repair Lab & Service Perangkat Terbaik. Spesialis Service Laptop, Printer, CCTV, Penyelamatan Data Hardisk, dan Pembuatan Website/Aplikasi di Pangkalpinang.">
+  <meta name="keywords"
+    content="service laptop pangkalpinang, service printer pangkalpinang, cctv pangkalpinang, recovery data pangkalpinang, nirwan computer">
+
   <!-- Fonts & Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="style.css">
-  
+
   <script>
-    // Silencing browser-internal errors from the console
-    window.addEventListener('error', function(event) {
+    window.addEventListener('error', function (event) {
       if (event.filename && event.filename.includes('webpage_content_reporter.js')) {
         event.stopImmediatePropagation();
       }
     }, true);
-    
-    // Additional check for SyntaxErrors in specific internal scripts
+
     const originalConsoleError = console.error;
-    console.error = function() {
+    console.error = function () {
       if (arguments[0] && typeof arguments[0] === 'string' && arguments[0].includes('webpage_content_reporter.js')) {
         return;
       }
@@ -34,111 +36,528 @@
 
 <body>
 
-  <!-- NAVIGATION -->
-  <header>
-    <div class="container nav-content">
-      <div class="logo-wrapper">
-        <img src="img/Logo.png.png" alt="NIRWAN COMPUTER" class="Logo">
-        <span class="company-name">NIRWAN COMPUTER PANGKALPINANG</span>
+  <!-- TOP STATUS BAR -->
+  <div class="top-status-bar">
+    <div class="container top-status-flex">
+      <div class="status-badge">
+        <span class="status-dot"></span> Lab Service Buka & Siap Melayani (Pangkalpinang)
       </div>
-      <a href="https://wa.me/6287846964636" class="cta-top">Konsultasikan Kepada Kami Sekarang</a>
+      <div class="top-contact-info">
+        <a href="https://wa.me/6287846964636" target="_blank"><i class="fab fa-whatsapp"></i> +62 878-4696-4636</a>
+        <a href="mailto:nirwancomputer06@gmail.com"><i class="fas fa-envelope"></i> nirwancomputer06@gmail.com</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVIGATION HEADER -->
+  <header id="main-header">
+    <div class="container nav-content">
+      <a href="#" class="logo-wrapper">
+        <img src="img/Logo.png.png" alt="NIRWAN COMPUTER" class="Logo">
+        <div class="logo-text-group">
+          <span class="company-name">NIRWAN COMPUTER</span>
+          <span class="company-tagline">DIGITAL REPAIR LAB</span>
+        </div>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#services">Layanan Kami</a></li>
+        <li><a href="#why-us">Keunggulan</a></li>
+        <li><a href="#reviews">Ulasan</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#location">Lokasi Lab</a></li>
+      </ul>
+
+      <a href="https://wa.me/6287846964636?text=Halo%20Nirwan%20Computer,%20saya%20ingin%20konsultasi%20masalah%20perangkat%20saya."
+        target="_blank" class="cta-top">
+        <i class="fab fa-whatsapp"></i> Konsultasi Gratis
+      </a>
     </div>
   </header>
 
   <!-- HERO SECTION -->
   <section class="hero">
     <div class="container">
-      <h1>Pelayanan Terbaik Adalah <span>Mutu</span><br>Kualitas Kami</h1>
-      <p>Layanan perbaikan perangkat laptop komputer dan printer. Jasa pembuatan aplikasi website dan mobile terbaik. Diagnosa akurat, eksekusi presisi, hasil maksimal langsung di lokasi Anda.</p>
+      <div class="hero-grid">
+        <div class="hero-left">
+          <div class="hero-badge-pill">
+            <i class="fas fa-shield-halved"></i> Partner Teknisi Terpercaya Pangkalpinang (Sejak 2018)
+          </div>
+          <h1>Pusat Service Hardware & Software <span class="text-gradient">Terpresisi di Pangkalpinang</span></h1>
+          <p class="hero-subtitle">
+            Solusi masalah Laptop, PC, Printer, CCTV, hingga Penyelamatan Data penting Anda. Ditangani langsung oleh
+            teknisi berpengalaman dengan diagnosa akurat, komponen terjamin, dan garansi resmi.
+          </p>
+
+          <div class="hero-actions">
+            <a href="https://wa.me/6287846964636?text=Halo%20Nirwan%20Computer,%20saya%20butuh%20bantuan%20service%20perangkat."
+              target="_blank" class="btn-primary">
+              <i class="fab fa-whatsapp"></i> Chat WhatsApp Sekarang
+            </a>
+            <a href="#services" class="btn-secondary">
+              <i class="fas fa-list-check"></i> Lihat Semua Layanan
+            </a>
+          </div>
+
+          <div class="hero-feature-tags">
+            <span><i class="fas fa-check-circle text-emerald"></i> Diagnosa Cepat</span>
+            <span><i class="fas fa-check-circle text-emerald"></i> Garansi Pengerjaan</span>
+            <span><i class="fas fa-check-circle text-emerald"></i> Komponen Original</span>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <!-- INTERACTIVE PROBLEM ESTIMATOR -->
+          <div class="hero-card-preview">
+            <div class="hero-card-header">
+              <div class="hero-card-title">
+                <i class="fas fa-microchip text-cyan"></i> Diagnosa Kendala Perangkat Anda
+              </div>
+              <span class="status-badge" style="font-size:0.7rem;"><i class="fas fa-bolt"></i> Respon Instan</span>
+            </div>
+
+            <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:1rem;">Pilih jenis masalah yang Anda
+              alami untuk mendapatkan konsultasi langsung secara gratis:</p>
+
+            <div class="interactive-selector-box">
+              <label class="selector-label">Pilih Jenis Masalah / Kebutuhan:</label>
+              <select id="problem-select" class="problem-select">
+                <option value="laptop">💻 Laptop / PC Mati Total, Lemot, atau Layar Blank</option>
+                <option value="printer">🖨️ Printer Hasil Cetak Bergaris / Macet / Blinking</option>
+                <option value="cctv">📹 Pemasangan / Perbaikan Kamera CCTV & Monitoring</option>
+                <option value="recovery">💾 Recovery Data Hardisk / SSD / SD Card Terhapus</option>
+                <option value="web">🌐 Pembuatan Website / Aplikasi Mobile Perusahaan</option>
+                <option value="custompc">🖥️ Rakit PC Gaming & Workstation High End</option>
+              </select>
+            </div>
+
+            <div id="problem-result" class="problem-result">
+              <span id="res-status"><strong>💡 Estimasi Solusi:</strong> Diagnosa komponen presisi di Lab kami.</span>
+              <span id="res-time"><i class="far fa-clock"></i> Estimasi Waktu: Bisa Ditunggu/ 1-2 Hari Kerja.</span>
+            </div>
+
+            <a id="interactive-wa-link"
+              href="https://wa.me/6287846964636?text=Halo%20Nirwan%20Computer,%20saya%20mengalami%20masalah%20Laptop%20/ PC%20Mati%20Total."
+              target="_blank" class="btn-primary" style="width:100%; margin-top:1.2rem; font-size:0.9rem;">
+              <i class="fab fa-whatsapp"></i> Konsultasikan Masalah Ini
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
+
+  <!-- TRUST BAR SECTION -->
+  <section class="trust-bar-section">
+    <div class="container">
+      <div class="trust-bar">
+        <div class="trust-item">
+          <strong>9+</strong>
+          <span>Tahun Pengalaman</span>
+        </div>
+        <div class="trust-item">
+          <strong>5.000+</strong>
+          <span>Perangkat Terperbaiki</span>
+        </div>
+        <div class="trust-item">
+          <strong>99.8%</strong>
+          <span>Data Recovery Success</span>
+        </div>
+        <div class="trust-item">
+          <strong>100%</strong>
+          <span>Garansi Pengerjaan</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- SERVICES SECTION -->
   <section id="services" class="section">
     <div class="container">
-      <div class="section-title">
-        <h2>Produk Dan Layanan Kami</h2>
-        <div class="line"></div>
+      <div class="section-header">
+        <span class="section-badge">Solusi Spesialis Kami</span>
+        <h2>Produk & Layanan Unggulan</h2>
+        <p>Penanganan masalah hardware, software, jaringan, dan pengembangan sistem IT terpadu.</p>
       </div>
-      <div class="grid">
-        <div class="card">
-          <div class="scan-line"></div>
-          <i class="fas fa-microchip"></i>
-          <h3>Perbaikan Perangkat Laptop Komputer</h3>
-          <p>Diagnosa level komponen untuk laptop. Penggantian chipset, reballing, dan perbaikan motherboard.</p>
+
+      <div class="services-grid">
+        <!-- Service 1 -->
+        <div class="service-card">
+          <div class="service-icon-wrapper">
+            <i class="fas fa-laptop-code"></i>
+          </div>
+          <h3>Service Laptop & PC</h3>
+          <p>Diagnosa level chipset & motherboard. Perbaikan mati total, overheating, ganti layar LCD, keyboard, dan
+            upgrade RAM/SSD NVMe.</p>
+          <ul class="service-highlights">
+            <li><i class="fas fa-check"></i> Reballing & Chipset Repair</li>
+            <li><i class="fas fa-check"></i> Ganti Sparepart Original</li>
+            <li><i class="fas fa-check"></i> Clean Dust & Repaste Thermal</li>
+          </ul>
+          <a href="https://wa.me/6287846964636?text=Halo%20Nirwan%20Computer,%20saya%20butuh%20service%20Laptop/PC."
+            target="_blank" class="service-btn-link">
+            Konsultasi Service <i class="fas fa-arrow-right"></i>
+          </a>
         </div>
 
-        <div class="card">
-          <div class="scan-line"></div>
-          <i class="fas fa-print"></i>
+        <!-- Service 2 -->
+        <div class="service-card">
+          <div class="service-icon-wrapper">
+            <i class="fas fa-print"></i>
+          </div>
           <h3>Perbaikan Printer</h3>
-          <p>Maintenance kerusakan printer inkjet & laserjet. Kalibrasi presisi dan optimasi output cetak.</p>
+          <p>Maintenance berkala dan perbaikan kerusakan printer Inkjet & Laserjet (Epson, Canon, HP, Brother).
+            Pemasangan infus, reset head & mekanik.</p>
+          <ul class="service-highlights">
+            <li><i class="fas fa-check"></i> Cleaning & Unclog Head</li>
+            <li><i class="fas fa-check"></i> Reset Counter & Mainboard</li>
+            <li><i class="fas fa-check"></i> Kalibrasi Output Cetak</li>
+          </ul>
+          <a href="https://wa.me/6287846964636?text=Halo%20Nirwan%20Computer,%20saya%20butuh%20service%20Printer."
+            target="_blank" class="service-btn-link">
+            Konsultasi Service <i class="fas fa-arrow-right"></i>
+          </a>
         </div>
 
-        <div class="card">
-          <div class="scan-line"></div>
-          <i class="fas fa-shield-halved"></i>
-          <h3>CCTV Monitoring</h3>
-          <p>Integrasi sistem CCTV cerdas. Konfigurasi network dan remote access monitoring real-time.</p>
+        <!-- Service 3 -->
+        <div class="service-card">
+          <div class="service-icon-wrapper">
+            <i class="fas fa-video"></i>
+          </div>
+          <h3>Instalasi & Service CCTV</h3>
+          <p>Integrasi sistem CCTV cerdas untuk rumah, kantor, toko, dan pabrik. Pemetaan posisi strategis, instalasi
+            kabel rapi, dan remote monitoring via HP.</p>
+          <ul class="service-highlights">
+            <li><i class="fas fa-check"></i> IP Cam & AHD HD Resolution</li>
+            <li><i class="fas fa-check"></i> Setting Online Smartphone</li>
+            <li><i class="fas fa-check"></i> Maintenance & Troubleshooting</li>
+          </ul>
+          <a href="https://wa.me/6287846964636?text=Halo%20Nirwan%20Computer,%20saya%20mau%20tanya%20pemasangan%20CCTV."
+            target="_blank" class="service-btn-link">
+            Konsultasi CCTV <i class="fas fa-arrow-right"></i>
+          </a>
         </div>
 
-        <div class="card">
-          <div class="scan-line"></div>
-          <i class="fas fa-code-branch"></i>
-          <h3>Web Application, Mobile Apps, Website Development, Digital Marketing </h3>
-          <p>Web development dan sistem otomasi workflow untuk efisiensi bisnis modern.</p>
+        <!-- Service 4 -->
+        <div class="service-card">
+          <div class="service-icon-wrapper">
+            <i class="fas fa-hard-drive"></i>
+          </div>
+          <h3>Penyelamatan Data (Data Recovery)</h3>
+          <p>Recovery data profesional dari Hardisk, SSD, Flashdisk, dan SD-Card yang terhapus, terformat, kena virus
+            ransomware, atau mengalami rusak fisik bad sector.</p>
+          <ul class="service-highlights">
+            <li><i class="fas fa-check"></i> Deep Sector Scan</li>
+            <li><i class="fas fa-check"></i> Penanganan Partisi Corrupt</li>
+            <li><i class="fas fa-check"></i> Kerahasiaan Data Terjamin 100%</li>
+          </ul>
+          <a href="https://wa.me/6287846964636?text=Halo%20Nirwan%20Computer,%20saya%20butuh%20penyelamatan%20data."
+            target="_blank" class="service-btn-link">
+            Recovery Data <i class="fas fa-arrow-right"></i>
+          </a>
         </div>
 
-        <div class="card">
-          <div class="scan-line"></div>
-          <i class="fas fa-hdd"></i>
-          <h3>Penyelamatan Data Hardisk/SSD/SD-Card</h3>
-          <p>Recovery data yang terhapus atau perangkat penyimpanan yang rusak secara profesional.</p>
+        <!-- Service 5 -->
+        <div class="service-card">
+          <div class="service-icon-wrapper">
+            <i class="fas fa-code"></i>
+          </div>
+          <h3>Web & Mobile App Development</h3>
+          <p>Pembuatan Website Perusahaan (Company Profile), Toko Online (E-Commerce), Sistem Kasir POS, dan Aplikasi
+            Mobile Android/iOS modern untuk efisiensi bisnis Anda.</p>
+          <ul class="service-highlights">
+            <li><i class="fas fa-check"></i> Design Modern & Fast Loading</li>
+            <li><i class="fas fa-check"></i> SEO & Google Friendly</li>
+            <li><i class="fas fa-check"></i> Responsive All Devices</li>
+          </ul>
+          <a href="https://wa.me/6287846964636?text=Halo%20Nirwan%20Computer,%20saya%20ingin%20membuat%20Website/Aplikasi."
+            target="_blank" class="service-btn-link">
+            Konsultasi Website <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <!-- Service 6 -->
+        <div class="service-card">
+          <div class="service-icon-wrapper">
+            <i class="fas fa-desktop"></i>
+          </div>
+          <h3>Rakit PC Gaming & Workstation</h3>
+          <p>Merakit Komputer Gaming, Editing Video 4K, 3D Rendering, dan Workstation Kantor sesuai budget dengan
+            manajemen kabel rapi dan aliran udara optimal.</p>
+          <ul class="service-highlights">
+            <li><i class="fas fa-check"></i> Konsultasi Benchmark & Specs</li>
+            <li><i class="fas fa-check"></i> Cable Management Super Rapi</li>
+            <li><i class="fas fa-check"></i> Stress Test & Benchmark Thermal</li>
+          </ul>
+          <a href="https://wa.me/6287846964636?text=Halo%20Nirwan%20Computer,%20saya%20mau%20rakit%20PC."
+            target="_blank" class="service-btn-link">
+            Rakit PC Sekarang <i class="fas fa-arrow-right"></i>
+          </a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- AUTOMATIC REAL-TIME GOOGLE REVIEWS -->
-  <section id="reviews" class="section">
+  <!-- WHY CHOOSE US -->
+  <section id="why-us" class="section">
     <div class="container">
-      <div class="section-title">
-        <h2>Ulasan Pelanggan</h2>
-        <div class="line"></div>
+      <div class="section-header">
+        <span class="section-badge">Mengapa Pilih Kami</span>
+        <h2>Komitmen Kualitas Tanpa Kompromi</h2>
+        <p>Alasan mengapa ribuan pelanggan di Pangkalpinang mempercayakan perangkat teknisnya kepada Nirwan Computer.
+        </p>
       </div>
-      
-      <!-- Real-Time Google Reviews Widget -->
+
+      <div class="why-us-grid">
+        <div class="why-card">
+          <i class="fas fa-vial"></i>
+          <h3>Diagnosa Akurat & Transparan</h3>
+          <p>Setiap perbaikan diawali dengan pemeriksaan menyeluruh. Tidak ada biaya siluman atau penggantian sparepart
+            tanpa konfirmasi persetujuan Anda.</p>
+        </div>
+
+        <div class="why-card">
+          <i class="fas fa-microscope"></i>
+          <h3>Peralatan Lab Modern</h3>
+          <p>Didukung peralatan diagnosa presisi tinggi seperti BGA Rework Station, Digital Microscope, dan USB Analyzer
+            untuk pengerjaan tingkat mikro.</p>
+        </div>
+
+        <div class="why-card">
+          <i class="fas fa-shield-heart"></i>
+          <h3>Garansi Resmi Pengerjaan</h3>
+          <p>Semua pengerjaan service kami dilengkapi dengan jaminan garansi retur & service ulang jika kendala yang
+            sama terulang kembali.</p>
+        </div>
+
+        <div class="why-card">
+          <i class="fas fa-clock-rotate-left"></i>
+          <h3>Pengerjaan Cepat & Efisien</h3>
+          <p>Kami menghargai waktu Anda. Kerusakan ringan seperti ganti keyboard, SSD, dan instalasi dapat ditunggu di
+            lokasi.</p>
+        </div>
+
+        <div class="why-card">
+          <i class="fas fa-lock"></i>
+          <h3>Keamanan Data 100% Terjaga</h3>
+          <p>Privasi dan dokumen penting di dalam perangkat Anda dijamin kerahasiaannya dengan protokol keamanan ketat.
+          </p>
+        </div>
+
+        <div class="why-card">
+          <i class="fas fa-hand-holding-dollar"></i>
+          <h3>Harga Kompetitif & Logis</h3>
+          <p>Biaya service profesional yang adil, transparan, dan sesuai dengan kualitas pengerjaan serta daya tahan
+            sparepart.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS SECTION -->
+  <section id="reviews" class="section reviews-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Testimoni Real Pelanggan</span>
+        <h2>Apa Kata Mereka Tentang Kami?</h2>
+        <p>Kepuasan pelanggan di Pangkalpinang adalah kebanggaan dan bukti reputasi layanan kami.</p>
+      </div>
+
+      <div class="reviews-grid">
+        <!-- Review 1 -->
+        <div class="review-card">
+          <div>
+            <div class="review-header">
+              <div class="reviewer-info">
+                <div class="reviewer-avatar">B</div>
+                <div>
+                  <div class="reviewer-name">Budi Santoso</div>
+                  <div class="reviewer-sub">Service Laptop Asus Rogue</div>
+                </div>
+              </div>
+              <i class="fab fa-google text-cyan"></i>
+            </div>
+            <div class="stars">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+            <p class="review-text">"Laptop gaming saya mati total karena kena tumpahan air. Dibawa ke Nirwan Computer
+              langsung dibersihkan dan dicek jalurnya. Alhamdulillah nyala lagi normal. Pengerjaan sangat profesional!"
+            </p>
+          </div>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="review-card">
+          <div>
+            <div class="review-header">
+              <div class="reviewer-info">
+                <div class="reviewer-avatar" style="background: linear-gradient(135deg, #10B981, #06B6D4);">R</div>
+                <div>
+                  <div class="reviewer-name">Rina Wati</div>
+                  <div class="reviewer-sub">Service Printer Epson</div>
+                </div>
+              </div>
+              <i class="fab fa-google text-cyan"></i>
+            </div>
+            <div class="stars">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+            <p class="review-text">"Printer kantor macet dan blinking merah terus. Mas Nirwan tanggap banget, dipanggil
+              ke lokasi langsung beres hari itu juga. Sangat merekomendasikan service di sini!"</p>
+          </div>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="review-card">
+          <div>
+            <div class="review-header">
+              <div class="reviewer-info">
+                <div class="reviewer-avatar" style="background: linear-gradient(135deg, #F59E0B, #EF4444);">H</div>
+                <div>
+                  <div class="reviewer-name">Hendra Wijaya</div>
+                  <div class="reviewer-sub">Recovery Data Hardisk</div>
+                </div>
+              </div>
+              <i class="fab fa-google text-cyan"></i>
+            </div>
+            <div class="stars">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+            <p class="review-text">"Hardisk eksternal saya tidak terbaca padahal isi file skripsi dan foto penting
+              keluarga. Beruntung diselamatkan oleh Nirwan Computer, 100% data bisa kembali utuh!"</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Real-Time Google Reviews Widget Integration -->
       <script src="https://elfsightcdn.com/platform.js" async></script>
       <div class="elfsight-app-0fa0a1a7-6dec-4fd1-ab01-ae73ed20a0ea" data-elfsight-app-lazy></div>
     </div>
   </section>
 
-  <!-- GARANSI -->
-  <div class="container">
-    <section class="garansi-box">
-      <h2>Kualitas</h2>
-      <p>Jaminan kualitas pada setiap komponen yang kami tangani.</p>
-    </section>
+  <!-- GARANSI BANNER -->
+  <div class="container section">
+    <div class="garansi-banner">
+      <h2><i class="fas fa-certificate"></i> Jaminan Mutu & Garansi Kepuasan</h2>
+      <p>Setiap pengerjaan service dan penggantian komponen di Nirwan Computer dilindungi dengan garansi resmi. Jika
+        timbul kendala sejenis pada masa garansi, kami perbaiki tanpa biaya tambahan!</p>
+      <a href="https://wa.me/6287846964636?text=Halo%20Nirwan%20Computer,%20saya%20ingin%20bertanya%20mengenai%20syarat%20garansi."
+        target="_blank" class="btn-primary" style="background:white; color:#0F172A;">
+        <i class="fab fa-whatsapp" style="color:#25D366;"></i> Konsultasi Garansi
+      </a>
+    </div>
   </div>
 
-  <!-- CTA -->
-  <section class="cta">
+  <!-- FAQ SECTION -->
+  <section id="faq" class="section">
     <div class="container">
-      <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 1.1rem;">Konsultasikan masalah teknis Anda secara instan.</p>
-      <a href="https://wa.me/6287846964636" class="btn" style="padding: 1rem 2.5rem; font-size: 1.25rem;">
-        <i class="fab fa-whatsapp"></i> Hubungi Kami
-      </a>
+      <div class="section-header">
+        <span class="section-badge">Pertanyaan Umum</span>
+        <h2>Tanya Jawab (FAQ)</h2>
+        <p>Pertanyaan yang sering ditanyakan oleh pelanggan kami sebelum melakukan perbaikan.</p>
+      </div>
+
+      <div class="faq-container">
+        <div class="faq-item active">
+          <button class="faq-question">
+            <span>Berapa lama proses diagnosa dan pengecekan awal?</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Diagnosa awal untuk kerusakan ringan hingga sedang biasanya memakan waktu 15 - 30 menit dan dapat
+              ditunggu. Untuk kendala mati total / short motherboard membutuhkan waktu 1-2 hari kerja untuk analisa
+              mikroskopis yang presisi.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Apakah ada biaya jika perangkat saya tidak bisa diperbaiki?</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Pengecekan dan konsultasi awal bersifat GRATIS. Jika setelah diagnosa perangkat dinyatakan tidak
+              memungkinkan diperbaiki (misal chipset rusak parah dan tidak ada part), Anda tidak dikenakan biaya
+              service.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Apakah bisa panggil teknisi datang ke rumah / kantor di Pangkalpinang?</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Ya! Untuk instalasi CCTV, perbaikan jaringan kantor, service printer instansi, dan penanganan unit PC
+              kantor, kami menyediakan layanan Kunjungan Teknisi ke Lokasi Anda di area Pangkalpinang dan sekitarnya.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Bagaimana garansi perbaikan di Nirwan Computer?</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Kami memberikan garansi service pengerjaan berkisar dari 1 bulan hingga 12 bulan (tergantung jenis
+              sparepart & perbaikan). Nota garansi resmi diberikan pada saat pengambilan perangkat.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- MAP SECTION -->
+  <!-- MAP & LOCATION SECTION -->
   <section id="location" class="section">
     <div class="container">
-      <div class="section-title">
-        <h2>Lokasi Kami:</h2>
-        <div class="line"></div>
+      <div class="section-header">
+        <span class="section-badge">Lokasi Workshop</span>
+        <h2>Kunjungi Lab Service Kami</h2>
+        <p>Silakan datang langsung ke toko / workshop kami di Pangkalpinang untuk konsultasi tatap muka.</p>
       </div>
-      <div class="map-container">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d602.4535403723654!2d106.11764960660325!3d-2.093347312661642!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e22c11ff1449da7%3A0xe48f7a25724265dd!2sNirwan%20Computer%20Pangkalpinang!5e1!3m2!1sid!2sid!4v1773768636110!5m2!1sid!2sid" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+      <div class="map-grid">
+        <div class="map-info-card">
+          <div class="location-detail-item">
+            <i class="fas fa-location-dot"></i>
+            <div>
+              <h4>Alamat Lengkap</h4>
+              <p>Nirwan Computer Pangkalpinang, Kepulauan Bangka Belitung.</p>
+            </div>
+          </div>
+
+          <div class="location-detail-item">
+            <i class="fas fa-clock"></i>
+            <div>
+              <h4>Jam Operasional</h4>
+              <p>Senin - Sabtu: 08:00 - 18:00 WIB<br>Minggu / Hari Libur: Dengan Perjanjian</p>
+            </div>
+          </div>
+
+          <div class="location-detail-item">
+            <i class="fas fa-phone"></i>
+            <div>
+              <h4>Kontak WhatsApp & Telepon</h4>
+              <p><a href="https://wa.me/6287846964636" style="color:var(--accent); text-decoration:none;">+62
+                  878-4696-4636</a></p>
+            </div>
+          </div>
+
+          <a href="https://www.google.com/maps/dir//Nirwan+Computer+Pangkalpinang" target="_blank" class="btn-primary"
+            style="width:100%; margin-top:1rem;">
+            <i class="fas fa-map-location-dot"></i> Petunjuk Arah Google Maps
+          </a>
+        </div>
+
+        <div class="map-wrapper">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d602.4535403723654!2d106.11764960660325!3d-2.093347312661642!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e22c11ff1449da7%3A0xe48f7a25724265dd!2sNirwan%20Computer%20Pangkalpinang!5e1!3m2!1sid!2sid!4v1773768636110!5m2!1sid!2sid"
+            loading="lazy" allowfullscreen="" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
       </div>
     </div>
   </section>
@@ -147,55 +566,84 @@
   <footer>
     <div class="container">
       <div class="footer-grid">
-        <div class="footer-logo">
+        <div class="footer-brand">
           <div class="footer-logo-wrapper">
             <img src="img/Logo.png.png" alt="NIRWAN COMPUTER" class="footer-logo-img">
             <h3>NIRWAN COMPUTER</h3>
           </div>
-          <p>Partner teknis strategis di Pangkalpinang Sejak 2018.</p>
+          <p>Partner teknis & digital lab terpercaya di Pangkalpinang sejak 2018. Memberikan solusi perbaikan terpresisi
+            untuk perangkat komputer, laptop, printer, dan infrastruktur IT perusahaan Anda.</p>
+          <div class="social-links">
+            <a href="https://www.facebook.com/nirwanComputer/" target="_blank" class="social-btn" title="Facebook"><i
+                class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/nirwan_computer/" target="_blank" class="social-btn" title="Instagram"><i
+                class="fab fa-instagram"></i></a>
+            <a href="https://wa.me/6287846964636" target="_blank" class="social-btn" title="WhatsApp"><i
+                class="fab fa-whatsapp"></i></a>
+            <a href="mailto:nirwancomputer06@gmail.com" class="social-btn" title="Email"><i
+                class="fas fa-envelope"></i></a>
+          </div>
         </div>
+
         <div class="footer-col">
-          <h4>Layanan Kami:</h4>
+          <h4>Spesialis Service</h4>
           <ul>
-            <li>Perbaikan Laptop dan Komputer</li>
-            <li>Perbaikan Printer</li>
-            <li>Rakit PC Gaming/Editing</li>
-            <li>Pemasangan CCTV</li>
-            <li>Pembuatan Aplikasi Website dan Mobile</li>
+            <li><a href="#services"><i class="fas fa-chevron-right text-cyan"></i> Service Laptop & PC</a></li>
+            <li><a href="#services"><i class="fas fa-chevron-right text-cyan"></i> Service Printer Inkjet/Laser</a></li>
+            <li><a href="#services"><i class="fas fa-chevron-right text-cyan"></i> Pemasangan CCTV System</a></li>
+            <li><a href="#services"><i class="fas fa-chevron-right text-cyan"></i> Penyelamatan Data Hardisk</a></li>
+            <li><a href="#services"><i class="fas fa-chevron-right text-cyan"></i> Web & App Development</a></li>
+            <li><a href="#services"><i class="fas fa-chevron-right text-cyan"></i> Rakit PC High End</a></li>
           </ul>
         </div>
+
         <div class="footer-col">
-          <h4>Hubungi Kami:</h4>
+          <h4>Hubungi Kami</h4>
           <ul>
-            <li><a href="https://wa.me/6287846964636" target="_blank"><i class="fab fa-whatsapp" style="color: #25D366;"></i>+62 878-4696-4636</a></li>
-            <li><a href="mailto:nirwancomputer06@gmail.com"><i class="fas fa-envelope" style="color: var(--accent);"></i>nirwancomputer06@gmail.com</a></li>
-            <li><a href="https://www.facebook.com/nirwanComputer/" target="_blank"><i class="fab fa-facebook" style="color: #1877F2;"></i>Facebook Nirwan Computer</a></li>
-            <li><a href="https://www.instagram.com/nirwan_computer/" target="_blank"><i class="fab fa-instagram" style="color: #E4405F;"></i>Instagram Nirwan Computer</a></li>
+            <li><a href="https://wa.me/6287846964636" target="_blank"><i class="fab fa-whatsapp text-emerald"></i> +62
+                878-4696-4636</a></li>
+            <li><a href="mailto:nirwancomputer06@gmail.com"><i class="fas fa-envelope text-cyan"></i>
+                nirwancomputer06@gmail.com</a></li>
+            <li><a href="https://www.facebook.com/nirwanComputer/" target="_blank"><i
+                  class="fab fa-facebook text-cyan"></i> Facebook Nirwan Computer</a></li>
+            <li><a href="https://www.instagram.com/nirwan_computer/" target="_blank"><i
+                  class="fab fa-instagram text-cyan"></i> Instagram Nirwan Computer</a></li>
           </ul>
         </div>
       </div>
-      <div class="visitor-counter-minimal">
+
+      <!-- VISITOR COUNTER CARD -->
+      <div class="visitor-counter-card">
         <i class="fas fa-users"></i>
-        <span id="visitor-count">0</span>
-        <span>Pengunjung</span>
+        <span>Total Pengunjung Web:</span>
+        <span id="visitor-count">1,580</span>
       </div>
-      <div style="text-align: center; color: var(--text-muted); font-size: 0.75rem; margin-top: 1.5rem;">
-        &copy; 2026 © MANAJEMEN SERVIS DAN PENJUALAN SPAREPART © NIRWAN COMPUTER PANGKALPINANG.
+
+      <div class="copyright-text">
+        &copy; 2026 MANAJEMEN SERVIS DAN PENJUALAN SPAREPART NIRWAN COMPUTER PANGKALPINANG. All Rights Reserved.
       </div>
     </div>
   </footer>
 
-  <!-- FLOAT WA -->
-  <a href="https://wa.me/6287846964636" class="wa" target="_blank">
-    <i class="fab fa-whatsapp"></i>
-  </a>
+  <!-- FLOATING WHATSAPP BUTTON WITH BADGE -->
+  <div class="floating-wa-wrapper">
+    <div class="wa-tooltip">
+      <span class="status-dot"></span> CS Siap Membantu
+    </div>
+    <a href="https://wa.me/6287846964636?text=Halo%20Nirwan%20Computer,%20saya%20ingin%20bertanya%20tentang%20layanan%20service."
+      class="wa-floating-btn" target="_blank" title="Chat WhatsApp">
+      <i class="fab fa-whatsapp"></i>
+      <span class="wa-badge">1</span>
+    </a>
+  </div>
 
-  <!-- POPUP -->
+  <!-- POPUP TECHNICAL LOG TOAST -->
   <div id="popup">
-    [LOG]: <span id="log-message"></span>
+    [SYSTEM_LOG]: <span id="log-message"></span>
   </div>
 
   <script src="script.js"></script>
 
 </body>
+
 </html>

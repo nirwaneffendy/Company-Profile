@@ -1,11 +1,12 @@
-// Refined Technical Log
+// --- 1. TECHNICAL LOG TOAST ANIMATION ---
 const logs = [
-  "Inbound: Laptop_Motherboard_Check",
-  "Status: Components_Diagnostics_OK",
-  "Success: Firmware_Update_Done",
-  "Optimized: Surveillance_Network",
-  "Log: Printer_Calibration_Success",
-  "Ready: Secure_Connection_Active"
+  "Inbound: Laptop_Motherboard_Diagnostics_Check",
+  "Status: Component_Level_Microscope_OK",
+  "Success: BIOS_Firmware_Reflash_Complete",
+  "Optimized: CCTV_Surveillance_Network_Online",
+  "Log: Printer_Head_Unclog_Calibration_Success",
+  "Ready: Secure_Data_Recovery_Sector_Scan",
+  "Status: SSD_NVMe_HighSpeed_Upgrade_Done"
 ];
 
 function updateLog() {
@@ -17,8 +18,8 @@ function updateLog() {
   
   popup.style.display = "flex";
   popup.style.opacity = "0";
-  popup.style.transform = "translateY(5px)";
-  popup.style.transition = "all 0.2s ease-out";
+  popup.style.transform = "translateY(10px)";
+  popup.style.transition = "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)";
 
   setTimeout(() => {
     popup.style.opacity = "1";
@@ -27,48 +28,123 @@ function updateLog() {
 
   setTimeout(() => {
     popup.style.opacity = "0";
-    popup.style.transform = "translateY(5px)";
+    popup.style.transform = "translateY(10px)";
     setTimeout(() => {
       popup.style.display = "none";
-    }, 200);
-  }, 3500);
+    }, 300);
+  }, 4000);
 }
 
-// Faster sequence for compact feel
 setTimeout(() => {
   updateLog();
-  setInterval(updateLog, 15000);
+  setInterval(updateLog, 16000);
 }, 3000);
 
+// --- 2. INTERACTIVE PROBLEM ESTIMATOR SELECTOR ---
+const problemSelect = document.getElementById('problem-select');
+const resStatus = document.getElementById('res-status');
+const resTime = document.getElementById('res-time');
+const waLink = document.getElementById('interactive-wa-link');
 
-// Fast Technical Reveal
-const observer = new IntersectionObserver((entries) => {
+const problemDetails = {
+  laptop: {
+    text: "💡 Estimasi Solusi: Pengecekan komponen & motherboard presisi di Lab.",
+    time: "⏱️ Estimasi Waktu: Bisa Ditunggu / 1-2 Hari Kerja.",
+    wa: "Halo Nirwan Computer, saya mengalami masalah Laptop / PC Mati Total, Lemot, atau Layar Blank."
+  },
+  printer: {
+    text: "💡 Estimasi Solusi: Maintenance head, reset counter, & kalibrasi mekanik.",
+    time: "⏱️ Estimasi Waktu: 30 Menit - 1 Hari Kerja.",
+    wa: "Halo Nirwan Computer, printer saya hasil cetaknya bergaris / macet / blinking."
+  },
+  cctv: {
+    text: "💡 Estimasi Solusi: Pemasangan unit baru / troubleshooting jaringan & DVR.",
+    time: "⏱️ Estimasi Waktu: Kunjungan Teknisi ke Lokasi Anda.",
+    wa: "Halo Nirwan Computer, saya ingin konsultasi pemasangan atau service Kamera CCTV."
+  },
+  recovery: {
+    text: "💡 Estimasi Solusi: Deep Sector Scanning & Reconstruct Partition Data.",
+    time: "⏱️ Estimasi Waktu: 1 - 3 Hari Kerja (Tergantung kapasitas Storage).",
+    wa: "Halo Nirwan Computer, saya butuh bantuan Penyelamatan / Recovery Data penting yang terhapus/rusak."
+  },
+  web: {
+    text: "💡 Estimasi Solusi: Custom Website & App Mobile Responsive + Free SEO.",
+    time: "⏱️ Estimasi Waktu: 3 - 7 Hari Kerja.",
+    wa: "Halo Nirwan Computer, saya mau buat Website Perusahaan / Toko Online / Aplikasi Mobile."
+  },
+  custompc: {
+    text: "💡 Estimasi Solusi: Konsultasi Spesifikasi, Cable Management & Stress Test.",
+    time: "⏱️ Estimasi Waktu: 1 Hari Kerja (Unit Siap Pakai).",
+    wa: "Halo Nirwan Computer, saya ingin konsultasi Rakit PC Gaming / Workstation Editing."
+  }
+};
+
+if (problemSelect) {
+  problemSelect.addEventListener('change', function() {
+    const selected = this.value;
+    const detail = problemDetails[selected];
+    if (detail) {
+      resStatus.innerHTML = `<strong>${detail.text}</strong>`;
+      resTime.innerHTML = `<i class="far fa-clock"></i> ${detail.time}`;
+      waLink.href = `https://wa.me/6287846964636?text=${encodeURIComponent(detail.wa)}`;
+    }
+  });
+}
+
+// --- 3. FAQ ACCORDION TOGGLE ---
+document.querySelectorAll('.faq-question').forEach(button => {
+  button.addEventListener('click', () => {
+    const faqItem = button.parentElement;
+    const isActive = faqItem.classList.contains('active');
+
+    // Close all FAQs
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.classList.remove('active');
+    });
+
+    // If wasn't active before, open it
+    if (!isActive) {
+      faqItem.classList.add('active');
+    }
+  });
+});
+
+// --- 4. STICKY HEADER SCROLL EFFECT ---
+const header = document.getElementById('main-header');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 40) {
+    header.classList.add('scrolled');
+  } else {
+    header.classList.remove('scrolled');
+  }
+});
+
+// --- 5. SCROLL REVEAL OBSERVER ---
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: "0px 0px -50px 0px"
+};
+
+const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry, index) => {
     if (entry.isIntersecting) {
       setTimeout(() => {
         entry.target.style.opacity = "1";
         entry.target.style.transform = "translateY(0)";
-      }, index * 50);
-      observer.unobserve(entry.target);
+      }, (index % 4) * 80);
+      revealObserver.unobserve(entry.target);
     }
   });
-}, { threshold: 0.1 });
+}, observerOptions);
 
-document.querySelectorAll('.card, .hero > *, .trust-item, .testimonial-card').forEach(el => {
+document.querySelectorAll('.service-card, .why-card, .review-card, .trust-item, .section-header, .hero-card-preview').forEach(el => {
   el.style.opacity = "0";
-  el.style.transform = "translateY(15px)";
-  el.style.transition = "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)";
-  observer.observe(el);
+  el.style.transform = "translateY(20px)";
+  el.style.transition = "all 0.5s cubic-bezier(0.16, 1, 0.3, 1)";
+  revealObserver.observe(el);
 });
 
-// Cursor Grid Position (Subtle)
-document.addEventListener('mousemove', (e) => {
-  const x = (e.clientX / window.innerWidth) * 10;
-  const y = (e.clientY / window.innerHeight) * 10;
-  document.body.style.backgroundPosition = `${x}px ${y}px, ${x + 12}px ${y + 12}px`;
-});
-
-// Proactively hide Elfsight branding
+// --- 6. HIDE ELFSIGHT BRANDING WATERMARK ---
 const hideBranding = () => {
   const links = document.querySelectorAll('a[href*="elfsight.com"], [class*="eapps-link"]');
   links.forEach(link => {
@@ -79,54 +155,48 @@ const hideBranding = () => {
   });
 };
 
-// Check for branding periodically - Optimized interval
-let brandingInterval = setInterval(hideBranding, 3000); // Increased from 1000ms
+let brandingInterval = setInterval(hideBranding, 3000);
 window.addEventListener('load', () => {
   hideBranding();
-  // Stop interval after 15 seconds to save resources
   setTimeout(() => clearInterval(brandingInterval), 15000);
 });
 
-// --- DEFINITIVE VISITOR COUNTER (v12 - STABLE & ACCURATE) ---
-// This version resets to 0 and uses a two-step logic:
-// 1. Increment ONLY ONCE when the page is loaded (up).
-// 2. Poll current count every 15 seconds WITHOUT incrementing (sync).
-
+// --- 7. VISITOR COUNTER LOGIC (PHP + API FALLBACK) ---
 const visitorElement = document.getElementById('visitor-count');
-const namespace = 'nirwan-computer-official';
-const key = 'v12-final-definitive';
-const baseUrl = `https://api.counterapi.dev/v1/${namespace}/${key}`;
 
-async function incrementAndShow() {
-    if (!visitorElement) return;
-    try {
-        // Step 1: Increment (+1) only on load
-        const response = await fetch(`${baseUrl}/up?t=${Date.now()}`);
-        if (response.ok) {
-            const data = await response.json();
-            visitorElement.innerText = data.count;
-        }
-    } catch (e) {
-        syncOnly(); // Fallback to just getting the count
+async function fetchVisitorCount() {
+  if (!visitorElement) return;
+
+  // Try Local PHP counter.php first
+  try {
+    const res = await fetch('counter.php');
+    if (res.ok) {
+      const data = await res.json();
+      if (data && data.count) {
+        visitorElement.innerText = Number(data.count).toLocaleString('id-ID');
+        return;
+      }
     }
-}
+  } catch (e) {
+    // Local PHP not active, fallback to global API
+  }
 
-async function syncOnly() {
-    if (!visitorElement) return;
-    try {
-        // Step 2: Get current total WITHOUT adding (+0)
-        const response = await fetch(`${baseUrl}/?t=${Date.now()}`);
-        if (response.ok) {
-            const data = await response.json();
-            visitorElement.innerText = data.count;
-        }
-    } catch (e) {}
+  // Fallback to counterapi.dev
+  try {
+    const namespace = 'nirwan-computer-official';
+    const key = 'v12-final-definitive';
+    const response = await fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/up?t=${Date.now()}`);
+    if (response.ok) {
+      const data = await response.json();
+      if (data && data.count) {
+        visitorElement.innerText = Number(data.count).toLocaleString('id-ID');
+      }
+    }
+  } catch (err) {
+    // If offline, default fallback text remains intact
+  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Start fresh
-    incrementAndShow();
-    
-    // Sync every 15 seconds to keep all devices updated without hitting rate limits
-    setInterval(syncOnly, 15000);
+  fetchVisitorCount();
 });
