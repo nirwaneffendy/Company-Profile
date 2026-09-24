@@ -169,7 +169,7 @@ const revealObserver = new IntersectionObserver((entries) => {
   });
 }, observerOptions);
 
-document.querySelectorAll('.service-card, .why-card, .review-card, .trust-item, .section-header, .hero-card-preview').forEach(el => {
+document.querySelectorAll('.service-card, .why-card, .review-card, .section-header, .hero-card-preview').forEach(el => {
   el.style.opacity = "0";
   el.style.transform = "translateY(20px)";
   el.style.transition = "all 0.5s cubic-bezier(0.16, 1, 0.3, 1)";

@@ -76,6 +76,7 @@ body {
 .text-gradient {
   background: linear-gradient(135deg, #60A5FA 0%, #38BDF8 50%, #A7F3D0 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -286,12 +287,6 @@ header.scrolled {
 .mobile-menu-toggle:hover, .mobile-menu-toggle:focus {
   background: var(--accent);
   color: var(--bg-deep);
-}
-  color: var(--text-secondary);
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 600;
-  transition: color 0.2s ease;
 }
 
 .nav-links a:hover {
