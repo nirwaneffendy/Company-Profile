@@ -189,13 +189,13 @@ window.addEventListener('load', () => {
   setTimeout(() => clearInterval(brandingInterval), 15000);
 });
 
-// --- 7. HYBRID REAL-TIME VISITOR COUNTER (GITHUB PAGES + PHP SUPPORT) ---
+// --- 7. PURE REAL-TIME VISITOR COUNTER FOR GITHUB PAGES & LOCALHOST ---
 const visitorElement = document.getElementById('visitor-count');
 
 async function fetchVisitorCount() {
   if (!visitorElement) return;
 
-  // 1. First attempt: Local PHP (Works on XAMPP / PHP Servers)
+  // 1. Check local PHP server if available
   try {
     const res = await fetch(`counter.php?t=${Date.now()}`);
     if (res.ok) {
@@ -209,19 +209,19 @@ async function fetchVisitorCount() {
       }
     }
   } catch (e) {
-    // PHP not available (e.g. GitHub Pages)
+    // PHP not available
   }
 
-  // 2. Second attempt: Live GitHub Pages Counter API (Komarev real-time SVG service)
+  // 2. Real-Time Live GitHub Visitor Count (dwyl/hits API)
   try {
-    const res = await fetch(`https://komarev.com/ghpvc/?username=nirwaneffendy-company-profile&color=06B6D4&t=${Date.now()}`);
+    const res = await fetch(`https://hits.dwyl.com/nirwaneffendy/Company-Profile.svg?t=${Date.now()}`);
     if (res.ok) {
       const svgText = await res.text();
       const matches = svgText.match(/<text[^>]*>(\d+)<\/text>/g);
-      if (matches && matches.length >= 2) {
-        const numStr = matches[1].replace(/<[^>]+>/g, '').trim();
-        if (numStr) {
-          visitorElement.innerText = Number(numStr).toLocaleString('id-ID');
+      if (matches && matches.length > 0) {
+        const countVal = matches[matches.length - 1].replace(/<[^>]+>/g, '').trim();
+        if (countVal) {
+          visitorElement.innerText = Number(countVal).toLocaleString('id-ID');
         }
       }
     }
