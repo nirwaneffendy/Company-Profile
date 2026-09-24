@@ -97,12 +97,10 @@ document.querySelectorAll('.faq-question').forEach(button => {
     const faqItem = button.parentElement;
     const isActive = faqItem.classList.contains('active');
 
-    // Close all FAQs
     document.querySelectorAll('.faq-item').forEach(item => {
       item.classList.remove('active');
     });
 
-    // If wasn't active before, open it
     if (!isActive) {
       faqItem.classList.add('active');
     }
@@ -126,7 +124,6 @@ if (mobileToggle && navMenu) {
     }
   });
 
-  // Close menu when clicking nav item
   document.querySelectorAll('.nav-link-item, .mobile-cta').forEach(link => {
     link.addEventListener('click', () => {
       navMenu.classList.remove('active');
@@ -134,7 +131,6 @@ if (mobileToggle && navMenu) {
     });
   });
 
-  // Close menu when clicking outside
   document.addEventListener('click', (e) => {
     if (!navMenu.contains(e.target) && !mobileToggle.contains(e.target)) {
       navMenu.classList.remove('active');
@@ -193,27 +189,48 @@ window.addEventListener('load', () => {
   setTimeout(() => clearInterval(brandingInterval), 15000);
 });
 
-// --- 7. PURE REAL-TIME VISITOR COUNTER LOGIC ---
+// --- 7. HYBRID REAL-TIME VISITOR COUNTER (GITHUB PAGES + PHP SUPPORT) ---
 const visitorElement = document.getElementById('visitor-count');
 
 async function fetchVisitorCount() {
   if (!visitorElement) return;
 
+  // 1. First attempt: Local PHP (Works on XAMPP / PHP Servers)
   try {
     const res = await fetch(`counter.php?t=${Date.now()}`);
     if (res.ok) {
-      const data = await res.json();
-      if (data && typeof data.count !== 'undefined') {
-        visitorElement.innerText = Number(data.count).toLocaleString('id-ID');
+      const text = await res.text();
+      if (text.startsWith('{')) {
+        const data = JSON.parse(text);
+        if (data && typeof data.count !== 'undefined') {
+          visitorElement.innerText = Number(data.count).toLocaleString('id-ID');
+          return;
+        }
       }
     }
   } catch (e) {
-    // Graceful offline handling
+    // PHP not available (e.g. GitHub Pages)
+  }
+
+  // 2. Second attempt: Live GitHub Pages Counter API (Komarev real-time SVG service)
+  try {
+    const res = await fetch(`https://komarev.com/ghpvc/?username=nirwaneffendy-company-profile&color=06B6D4&t=${Date.now()}`);
+    if (res.ok) {
+      const svgText = await res.text();
+      const matches = svgText.match(/<text[^>]*>(\d+)<\/text>/g);
+      if (matches && matches.length >= 2) {
+        const numStr = matches[1].replace(/<[^>]+>/g, '').trim();
+        if (numStr) {
+          visitorElement.innerText = Number(numStr).toLocaleString('id-ID');
+        }
+      }
+    }
+  } catch (err) {
+    // Offline fallback
   }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   fetchVisitorCount();
-  // Live sync every 10 seconds for real-time updates
   setInterval(fetchVisitorCount, 10000);
 });
