@@ -109,8 +109,40 @@ document.querySelectorAll('.faq-question').forEach(button => {
   });
 });
 
-// --- 4. STICKY HEADER SCROLL EFFECT ---
+// --- 4. STICKY HEADER & MOBILE MENU DRAWER ---
 const header = document.getElementById('main-header');
+const mobileToggle = document.getElementById('mobile-toggle');
+const navMenu = document.getElementById('nav-menu');
+const toggleIcon = document.getElementById('toggle-icon');
+
+if (mobileToggle && navMenu) {
+  mobileToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    navMenu.classList.toggle('active');
+    if (navMenu.classList.contains('active')) {
+      toggleIcon.className = 'fas fa-xmark';
+    } else {
+      toggleIcon.className = 'fas fa-bars';
+    }
+  });
+
+  // Close menu when clicking nav item
+  document.querySelectorAll('.nav-link-item, .mobile-cta').forEach(link => {
+    link.addEventListener('click', () => {
+      navMenu.classList.remove('active');
+      if (toggleIcon) toggleIcon.className = 'fas fa-bars';
+    });
+  });
+
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!navMenu.contains(e.target) && !mobileToggle.contains(e.target)) {
+      navMenu.classList.remove('active');
+      if (toggleIcon) toggleIcon.className = 'fas fa-bars';
+    }
+  });
+}
+
 window.addEventListener('scroll', () => {
   if (window.scrollY > 40) {
     header.classList.add('scrolled');

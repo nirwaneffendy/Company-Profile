@@ -40,11 +40,14 @@
   <div class="top-status-bar">
     <div class="container top-status-flex">
       <div class="status-badge">
-        <span class="status-dot"></span> Lab Service Buka & Siap Melayani (Pangkalpinang)
+        <span class="status-dot"></span>
+        <span class="status-text">Lab Service Buka & Siap Melayani (Pangkalpinang)</span>
       </div>
       <div class="top-contact-info">
-        <a href="https://wa.me/6287846964636" target="_blank"><i class="fab fa-whatsapp"></i> +62 878-4696-4636</a>
-        <a href="mailto:nirwancomputer06@gmail.com"><i class="fas fa-envelope"></i> nirwancomputer06@gmail.com</a>
+        <a href="https://wa.me/6287846964636" target="_blank" title="WhatsApp CS"><i class="fab fa-whatsapp"></i>
+          <span>+62 878-4696-4636</span></a>
+        <a href="mailto:nirwancomputer06@gmail.com" class="top-email" title="Email"><i class="fas fa-envelope"></i>
+          <span>nirwancomputer06@gmail.com</span></a>
       </div>
     </div>
   </div>
@@ -60,18 +63,29 @@
         </div>
       </a>
 
-      <ul class="nav-links">
-        <li><a href="#services">Layanan Kami</a></li>
-        <li><a href="#why-us">Keunggulan</a></li>
-        <li><a href="#reviews">Ulasan</a></li>
-        <li><a href="#faq">FAQ</a></li>
-        <li><a href="#location">Lokasi Lab</a></li>
-      </ul>
+      <div class="nav-menu-wrapper" id="nav-menu">
+        <ul class="nav-links">
+          <li><a href="#services" class="nav-link-item">Layanan Kami</a></li>
+          <li><a href="#why-us" class="nav-link-item">Keunggulan</a></li>
+          <li><a href="#reviews" class="nav-link-item">Ulasan</a></li>
+          <li><a href="#faq" class="nav-link-item">FAQ</a></li>
+          <li><a href="#location" class="nav-link-item">Lokasi Lab</a></li>
+        </ul>
+        <a href="https://wa.me/6287846964636?text=Halo%20Nirwan%20Computer,%20saya%20ingin%20konsultasi%20masalah%20perangkat%20saya."
+          target="_blank" class="cta-top mobile-cta">
+          <i class="fab fa-whatsapp"></i> Konsultasi Gratis
+        </a>
+      </div>
 
-      <a href="https://wa.me/6287846964636?text=Halo%20Nirwan%20Computer,%20saya%20ingin%20konsultasi%20masalah%20perangkat%20saya."
-        target="_blank" class="cta-top">
-        <i class="fab fa-whatsapp"></i> Konsultasi Gratis
-      </a>
+      <div class="nav-actions-right">
+        <a href="https://wa.me/6287846964636?text=Halo%20Nirwan%20Computer,%20saya%20ingin%20konsultasi%20masalah%20perangkat%20saya."
+          target="_blank" class="cta-top desktop-cta">
+          <i class="fab fa-whatsapp"></i> Konsultasi Gratis
+        </a>
+        <button class="mobile-menu-toggle" id="mobile-toggle" aria-label="Buka Menu Mobile">
+          <i class="fas fa-bars" id="toggle-icon"></i>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -81,7 +95,7 @@
       <div class="hero-grid">
         <div class="hero-left">
           <div class="hero-badge-pill">
-            <i class="fas fa-shield-halved"></i> Partner Teknisi Terpercaya Pangkalpinang (Sejak 2018)
+            <i class="fas fa-shield-halved"></i> Partner Teknisi Terpercaya Pangkalpinang (Sejak 2016)
           </div>
           <h1>Pusat Service Hardware & Software <span class="text-gradient">Terpresisi di Pangkalpinang</span></h1>
           <p class="hero-subtitle">
@@ -356,21 +370,23 @@
 
   <!-- REVIEWS SECTION -->
   <section id="reviews" class="section reviews-section">
-         <div class="section-header">
-        <span class="section-badge"><i class="fab fa-google"></i> Ulasan Asli Google Maps</span>
-        <h2>Ulasan Real Pelanggan Kami</h2>
-        <p>Ulasan jujur dan asli yang diberikan oleh pelanggan Nirwan Computer Pangkalpinang secara langsung di Google Maps.</p>
-      </div>
+    <div class="section-header">
+      <span class="section-badge"><i class="fab fa-google"></i> Ulasan Asli Google Maps</span>
+      <h2>Ulasan Real Pelanggan Kami</h2>
+      <p>Ulasan jujur dan asli yang diberikan oleh pelanggan Nirwan Computer Pangkalpinang secara langsung di Google
+        Maps.</p>
+    </div>
 
-      <!-- Real-Time Google Reviews Widget Integration -->
-      <script src="https://elfsightcdn.com/platform.js" async></script>
-      <div class="elfsight-app-0fa0a1a7-6dec-4fd1-ab01-ae73ed20a0ea" data-elfsight-app-lazy></div>
+    <!-- Real-Time Google Reviews Widget Integration -->
+    <script src="https://elfsightcdn.com/platform.js" async></script>
+    <div class="elfsight-app-0fa0a1a7-6dec-4fd1-ab01-ae73ed20a0ea" data-elfsight-app-lazy></div>
 
-      <div style="text-align: center; margin-top: 2rem;">
-        <a href="https://www.google.com/maps/place/Nirwan+Computer+Pangkalpinang" target="_blank" class="btn-secondary" style="border-color: var(--accent); color: var(--text-primary);">
-          <i class="fab fa-google" style="color:#4285F4;"></i> Lihat Semua Ulasan Asli & Tulis Ulasan di Google Maps
-        </a>
-      </div>
+    <div style="text-align: center; margin-top: 2rem;">
+      <a href="https://www.google.com/maps/place/Nirwan+Computer+Pangkalpinang" target="_blank" class="btn-secondary"
+        style="border-color: var(--accent); color: var(--text-primary);">
+        <i class="fab fa-google" style="color:#4285F4;"></i> Lihat Semua Ulasan Asli & Tulis Ulasan di Google Maps
+      </a>
+    </div>
     </div>
   </section>
 
@@ -507,7 +523,7 @@
             <img src="img/Logo.png.png" alt="NIRWAN COMPUTER" class="footer-logo-img">
             <h3>NIRWAN COMPUTER</h3>
           </div>
-          <p>Partner teknis & digital lab terpercaya di Pangkalpinang sejak 2018. Memberikan solusi perbaikan terpresisi
+          <p>Partner teknis & digital lab terpercaya di Pangkalpinang sejak 2016. Memberikan solusi perbaikan terpresisi
             untuk perangkat komputer, laptop, printer, dan infrastruktur IT perusahaan Anda.</p>
           <div class="social-links">
             <a href="https://www.facebook.com/nirwanComputer/" target="_blank" class="social-btn" title="Facebook"><i
