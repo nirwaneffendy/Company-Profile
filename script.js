@@ -193,42 +193,27 @@ window.addEventListener('load', () => {
   setTimeout(() => clearInterval(brandingInterval), 15000);
 });
 
-// --- 7. VISITOR COUNTER LOGIC (PHP + API FALLBACK) ---
+// --- 7. PURE REAL-TIME VISITOR COUNTER LOGIC ---
 const visitorElement = document.getElementById('visitor-count');
 
 async function fetchVisitorCount() {
   if (!visitorElement) return;
 
-  // Try Local PHP counter.php first
   try {
-    const res = await fetch('counter.php');
+    const res = await fetch(`counter.php?t=${Date.now()}`);
     if (res.ok) {
       const data = await res.json();
-      if (data && data.count) {
+      if (data && typeof data.count !== 'undefined') {
         visitorElement.innerText = Number(data.count).toLocaleString('id-ID');
-        return;
       }
     }
   } catch (e) {
-    // Local PHP not active, fallback to global API
-  }
-
-  // Fallback to counterapi.dev
-  try {
-    const namespace = 'nirwan-computer-official';
-    const key = 'v12-final-definitive';
-    const response = await fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/up?t=${Date.now()}`);
-    if (response.ok) {
-      const data = await response.json();
-      if (data && data.count) {
-        visitorElement.innerText = Number(data.count).toLocaleString('id-ID');
-      }
-    }
-  } catch (err) {
-    // If offline, default fallback text remains intact
+    // Graceful offline handling
   }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   fetchVisitorCount();
+  // Live sync every 10 seconds for real-time updates
+  setInterval(fetchVisitorCount, 10000);
 });
