@@ -195,11 +195,6 @@ const visitorElement = document.getElementById('visitor-count');
 async function syncVisitorCount() {
   if (!visitorElement) return;
 
-  // Clear any legacy device-isolated localStorage residue
-  try {
-    localStorage.removeItem('nc_total_visitors');
-  } catch (e) {}
-
   const BASE_COUNT = 3115;
 
   // Layer 1: Local PHP environment (XAMPP/Apache)
@@ -222,26 +217,20 @@ async function syncVisitorCount() {
 
   // Layer 2: Centralized Global REST API (Abacus API with full CORS support)
   try {
-    const sessionKey = 'nc_hit_session_' + new Date().toISOString().slice(0, 10);
-    const apiEndpoint = sessionStorage.getItem(sessionKey)
-      ? 'https://abacus.jasoncameron.dev/get/nirwancomputer/companyprofile'
-      : 'https://abacus.jasoncameron.dev/hit/nirwancomputer/companyprofile';
-
-    const res = await fetch(apiEndpoint);
+    const res = await fetch(`https://abacus.jasoncameron.dev/hit/nirwancomputer/companyprofile?t=${Date.now()}`);
     if (res.ok) {
       const data = await res.json();
       if (data && typeof data.value !== 'undefined') {
-        sessionStorage.setItem(sessionKey, 'true');
         const globalCount = BASE_COUNT + Number(data.value);
         visitorElement.innerText = globalCount.toLocaleString('id-ID');
         return;
       }
     }
   } catch (e) {
-    // API network fallback
+    // Network fallback
   }
 
-  // Layer 3: Background ping fallback to dwyl
+  // Layer 3: Secondary hit counter fallback
   try {
     new Image().src = `https://hits.dwyl.com/nirwaneffendy/Company-Profile.svg?t=${Date.now()}`;
   } catch (e) {}
