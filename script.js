@@ -189,15 +189,15 @@ window.addEventListener('load', () => {
   setTimeout(() => clearInterval(brandingInterval), 15000);
 });
 
-// --- 7. CLEAN REAL-TIME VISITOR COUNTER FOR GITHUB PAGES & LOCALHOST ---
+// --- 7. CLEAN REAL-TIME GLOBAL VISITOR COUNTER FOR GITHUB PAGES, VERCEL & LOCALHOST ---
 const visitorElement = document.getElementById('visitor-count');
 
 async function syncVisitorCount() {
   if (!visitorElement) return;
 
-  const BASE_VISITOR_COUNT = 3115;
+  const BASE_COUNT = 3115;
 
-  // 1. Check local PHP server (XAMPP / Apache)
+  // Layer 1: Local PHP environment (XAMPP/Apache)
   try {
     const res = await fetch(`counter.php?t=${Date.now()}`);
     if (res.ok) {
@@ -205,36 +205,41 @@ async function syncVisitorCount() {
       if (text && text.trim().startsWith('{')) {
         const data = JSON.parse(text);
         if (data && typeof data.count !== 'undefined') {
-          const phpCount = Math.max(Number(data.count) || 0, BASE_VISITOR_COUNT);
+          const phpCount = Math.max(Number(data.count) || 0, BASE_COUNT);
           visitorElement.innerText = phpCount.toLocaleString('id-ID');
           return;
         }
       }
     }
   } catch (e) {
-    // PHP not available (GitHub Pages static host)
+    // PHP not available (Vercel / GitHub Pages static host)
   }
 
-  // 2. Ping remote counter in background to keep server records updated
+  // Layer 2: Centralized Global REST API (Abacus API with full CORS support)
   try {
-    const imgPing = new Image();
-    imgPing.src = `https://hits.dwyl.com/nirwaneffendy/Company-Profile.svg?t=${Date.now()}`;
+    const sessionKey = 'nc_hit_session_' + new Date().toISOString().slice(0, 10);
+    const apiEndpoint = sessionStorage.getItem(sessionKey)
+      ? 'https://abacus.jasoncameron.dev/get/nirwancomputer/companyprofile'
+      : 'https://abacus.jasoncameron.dev/hit/nirwancomputer/companyprofile';
+
+    const res = await fetch(apiEndpoint);
+    if (res.ok) {
+      const data = await res.json();
+      if (data && typeof data.value !== 'undefined') {
+        sessionStorage.setItem(sessionKey, 'true');
+        const globalCount = BASE_COUNT + Number(data.value);
+        visitorElement.innerText = globalCount.toLocaleString('id-ID');
+        return;
+      }
+    }
+  } catch (e) {
+    // API network fallback
+  }
+
+  // Layer 3: Background ping fallback to dwyl
+  try {
+    new Image().src = `https://hits.dwyl.com/nirwaneffendy/Company-Profile.svg?t=${Date.now()}`;
   } catch (e) {}
-
-  // 3. Dynamic session visitor tracking for GitHub Pages
-  let totalVisitors = parseInt(localStorage.getItem('nc_total_visitors') || '0', 10);
-  if (totalVisitors < BASE_VISITOR_COUNT) {
-    totalVisitors = BASE_VISITOR_COUNT;
-  }
-
-  const sessionKey = 'nc_visit_session_' + new Date().toISOString().slice(0, 10);
-  if (!sessionStorage.getItem(sessionKey)) {
-    totalVisitors += 1;
-    sessionStorage.setItem(sessionKey, 'true');
-    localStorage.setItem('nc_total_visitors', totalVisitors.toString());
-  }
-
-  visitorElement.innerText = totalVisitors.toLocaleString('id-ID');
 }
 
 document.addEventListener('DOMContentLoaded', () => {
