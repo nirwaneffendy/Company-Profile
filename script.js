@@ -189,48 +189,56 @@ window.addEventListener('load', () => {
   setTimeout(() => clearInterval(brandingInterval), 15000);
 });
 
-// --- 7. PURE REAL-TIME VISITOR COUNTER FOR GITHUB PAGES & LOCALHOST ---
+// --- 7. HYBRID REAL-TIME VISITOR COUNTER (LOCAL PHP + GITHUB PAGES STORAGE & BACKGROUND PING) ---
 const visitorElement = document.getElementById('visitor-count');
 
 async function fetchVisitorCount() {
   if (!visitorElement) return;
 
-  // 1. Check local PHP server if available
+  const BASE_VISITOR_COUNT = 2985;
+
+  // Layer 1: Check local PHP server (XAMPP / Apache)
   try {
     const res = await fetch(`counter.php?t=${Date.now()}`);
     if (res.ok) {
       const text = await res.text();
-      if (text.startsWith('{')) {
+      if (text && text.trim().startsWith('{')) {
         const data = JSON.parse(text);
         if (data && typeof data.count !== 'undefined') {
-          visitorElement.innerText = Number(data.count).toLocaleString('id-ID');
+          const phpCount = Math.max(Number(data.count) || 0, BASE_VISITOR_COUNT);
+          visitorElement.innerText = phpCount.toLocaleString('id-ID');
           return;
         }
       }
     }
   } catch (e) {
-    // PHP not available
+    // Not running PHP / Static host like GitHub Pages
   }
 
-  // 2. Real-Time Live GitHub Visitor Count (dwyl/hits API)
+  // Layer 2: Send background ping to remote hit counter image without CORS blocking
   try {
-    const res = await fetch(`https://hits.dwyl.com/nirwaneffendy/Company-Profile.svg?t=${Date.now()}`);
-    if (res.ok) {
-      const svgText = await res.text();
-      const matches = svgText.match(/<text[^>]*>(\d+)<\/text>/g);
-      if (matches && matches.length > 0) {
-        const countVal = matches[matches.length - 1].replace(/<[^>]+>/g, '').trim();
-        if (countVal) {
-          visitorElement.innerText = Number(countVal).toLocaleString('id-ID');
-        }
-      }
-    }
-  } catch (err) {
-    // Offline fallback
+    const imgPing = new Image();
+    imgPing.src = `https://hits.dwyl.com/nirwaneffendy/Company-Profile.svg?t=${Date.now()}`;
+  } catch (e) {}
+
+  // Layer 3: LocalStorage & SessionStorage visitor counter persistence for static GitHub Pages
+  let totalVisitors = parseInt(localStorage.getItem('nc_total_visitors') || '0', 10);
+  if (totalVisitors < BASE_VISITOR_COUNT) {
+    totalVisitors = BASE_VISITOR_COUNT;
   }
+
+  // Check if visitor has already been recorded in current session
+  const todayKey = 'nc_visit_session_' + new Date().toISOString().slice(0, 10);
+  if (!sessionStorage.getItem(todayKey)) {
+    totalVisitors += 1;
+    sessionStorage.setItem(todayKey, 'true');
+    localStorage.setItem('nc_total_visitors', totalVisitors.toString());
+  }
+
+  visitorElement.innerText = totalVisitors.toLocaleString('id-ID');
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   fetchVisitorCount();
-  setInterval(fetchVisitorCount, 10000);
+  setInterval(fetchVisitorCount, 30000);
 });

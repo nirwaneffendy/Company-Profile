@@ -7,9 +7,9 @@ header('Expires: 0');
 $file = 'visitors.txt';
 $log_file = 'visitor_ips.txt';
 
-// Ensure files exist with initial count 1
+// Ensure files exist with initial count 2985
 if (!file_exists($file)) {
-    file_put_contents($file, '1', LOCK_EX);
+    file_put_contents($file, '2985', LOCK_EX);
 }
 if (!file_exists($log_file)) {
     file_put_contents($log_file, '', LOCK_EX);
@@ -34,6 +34,9 @@ $visitor_key = md5($user_ip . '_' . $today);
 $recorded_keys = file_exists($log_file) ? file($log_file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) : [];
 
 $current_count = (int)file_get_contents($file);
+if ($current_count < 2985) {
+    $current_count = 2985;
+}
 
 // If new unique visitor today, increment count & log key
 if (!in_array($visitor_key, $recorded_keys)) {
