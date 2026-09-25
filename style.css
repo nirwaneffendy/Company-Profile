@@ -1080,6 +1080,13 @@ footer {
   font-size: 1.1rem;
 }
 
+.visitor-badge-img {
+  height: 22px;
+  border-radius: 4px;
+  vertical-align: middle;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
 .copyright-text {
   text-align: center;
   color: var(--text-muted);

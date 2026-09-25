@@ -189,56 +189,40 @@ window.addEventListener('load', () => {
   setTimeout(() => clearInterval(brandingInterval), 15000);
 });
 
-// --- 7. HYBRID REAL-TIME VISITOR COUNTER (LOCAL PHP + GITHUB PAGES STORAGE & BACKGROUND PING) ---
+// --- 7. REAL-TIME GLOBAL VISITOR COUNTER FOR GITHUB PAGES & LOCALHOST ---
 const visitorElement = document.getElementById('visitor-count');
+const visitorBadge = document.getElementById('visitor-badge');
 
-async function fetchVisitorCount() {
-  if (!visitorElement) return;
-
-  const BASE_VISITOR_COUNT = 2985;
-
-  // Layer 1: Check local PHP server (XAMPP / Apache)
-  try {
-    const res = await fetch(`counter.php?t=${Date.now()}`);
-    if (res.ok) {
-      const text = await res.text();
-      if (text && text.trim().startsWith('{')) {
-        const data = JSON.parse(text);
-        if (data && typeof data.count !== 'undefined') {
-          const phpCount = Math.max(Number(data.count) || 0, BASE_VISITOR_COUNT);
-          visitorElement.innerText = phpCount.toLocaleString('id-ID');
-          return;
+async function syncVisitorCount() {
+  // Layer 1: If local PHP environment is running (XAMPP/Apache)
+  if (visitorElement) {
+    try {
+      const res = await fetch(`counter.php?t=${Date.now()}`);
+      if (res.ok) {
+        const text = await res.text();
+        if (text && text.trim().startsWith('{')) {
+          const data = JSON.parse(text);
+          if (data && typeof data.count !== 'undefined') {
+            const phpCount = Math.max(Number(data.count) || 0, 3115);
+            visitorElement.innerText = phpCount.toLocaleString('id-ID');
+            visitorElement.style.display = 'inline';
+            if (visitorBadge) visitorBadge.style.display = 'none';
+            return;
+          }
         }
       }
+    } catch (e) {
+      // PHP not available (GitHub Pages static host)
     }
-  } catch (e) {
-    // Not running PHP / Static host like GitHub Pages
   }
 
-  // Layer 2: Send background ping to remote hit counter image without CORS blocking
-  try {
-    const imgPing = new Image();
-    imgPing.src = `https://hits.dwyl.com/nirwaneffendy/Company-Profile.svg?t=${Date.now()}`;
-  } catch (e) {}
-
-  // Layer 3: LocalStorage & SessionStorage visitor counter persistence for static GitHub Pages
-  let totalVisitors = parseInt(localStorage.getItem('nc_total_visitors') || '0', 10);
-  if (totalVisitors < BASE_VISITOR_COUNT) {
-    totalVisitors = BASE_VISITOR_COUNT;
+  // Layer 2: Live global hit counter badge for GitHub Pages
+  if (visitorBadge) {
+    visitorBadge.style.display = 'inline';
+    if (visitorElement) visitorElement.style.display = 'none';
   }
-
-  // Check if visitor has already been recorded in current session
-  const todayKey = 'nc_visit_session_' + new Date().toISOString().slice(0, 10);
-  if (!sessionStorage.getItem(todayKey)) {
-    totalVisitors += 1;
-    sessionStorage.setItem(todayKey, 'true');
-    localStorage.setItem('nc_total_visitors', totalVisitors.toString());
-  }
-
-  visitorElement.innerText = totalVisitors.toLocaleString('id-ID');
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  fetchVisitorCount();
-  setInterval(fetchVisitorCount, 30000);
+  syncVisitorCount();
 });
