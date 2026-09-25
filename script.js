@@ -195,6 +195,11 @@ const visitorElement = document.getElementById('visitor-count');
 async function syncVisitorCount() {
   if (!visitorElement) return;
 
+  // Clear any legacy device-isolated localStorage residue
+  try {
+    localStorage.removeItem('nc_total_visitors');
+  } catch (e) {}
+
   const BASE_COUNT = 3115;
 
   // Layer 1: Local PHP environment (XAMPP/Apache)
