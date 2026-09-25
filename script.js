@@ -189,38 +189,52 @@ window.addEventListener('load', () => {
   setTimeout(() => clearInterval(brandingInterval), 15000);
 });
 
-// --- 7. REAL-TIME GLOBAL VISITOR COUNTER FOR GITHUB PAGES & LOCALHOST ---
+// --- 7. CLEAN REAL-TIME VISITOR COUNTER FOR GITHUB PAGES & LOCALHOST ---
 const visitorElement = document.getElementById('visitor-count');
-const visitorBadge = document.getElementById('visitor-badge');
 
 async function syncVisitorCount() {
-  // Layer 1: If local PHP environment is running (XAMPP/Apache)
-  if (visitorElement) {
-    try {
-      const res = await fetch(`counter.php?t=${Date.now()}`);
-      if (res.ok) {
-        const text = await res.text();
-        if (text && text.trim().startsWith('{')) {
-          const data = JSON.parse(text);
-          if (data && typeof data.count !== 'undefined') {
-            const phpCount = Math.max(Number(data.count) || 0, 3115);
-            visitorElement.innerText = phpCount.toLocaleString('id-ID');
-            visitorElement.style.display = 'inline';
-            if (visitorBadge) visitorBadge.style.display = 'none';
-            return;
-          }
+  if (!visitorElement) return;
+
+  const BASE_VISITOR_COUNT = 3115;
+
+  // 1. Check local PHP server (XAMPP / Apache)
+  try {
+    const res = await fetch(`counter.php?t=${Date.now()}`);
+    if (res.ok) {
+      const text = await res.text();
+      if (text && text.trim().startsWith('{')) {
+        const data = JSON.parse(text);
+        if (data && typeof data.count !== 'undefined') {
+          const phpCount = Math.max(Number(data.count) || 0, BASE_VISITOR_COUNT);
+          visitorElement.innerText = phpCount.toLocaleString('id-ID');
+          return;
         }
       }
-    } catch (e) {
-      // PHP not available (GitHub Pages static host)
     }
+  } catch (e) {
+    // PHP not available (GitHub Pages static host)
   }
 
-  // Layer 2: Live global hit counter badge for GitHub Pages
-  if (visitorBadge) {
-    visitorBadge.style.display = 'inline';
-    if (visitorElement) visitorElement.style.display = 'none';
+  // 2. Ping remote counter in background to keep server records updated
+  try {
+    const imgPing = new Image();
+    imgPing.src = `https://hits.dwyl.com/nirwaneffendy/Company-Profile.svg?t=${Date.now()}`;
+  } catch (e) {}
+
+  // 3. Dynamic session visitor tracking for GitHub Pages
+  let totalVisitors = parseInt(localStorage.getItem('nc_total_visitors') || '0', 10);
+  if (totalVisitors < BASE_VISITOR_COUNT) {
+    totalVisitors = BASE_VISITOR_COUNT;
   }
+
+  const sessionKey = 'nc_visit_session_' + new Date().toISOString().slice(0, 10);
+  if (!sessionStorage.getItem(sessionKey)) {
+    totalVisitors += 1;
+    sessionStorage.setItem(sessionKey, 'true');
+    localStorage.setItem('nc_total_visitors', totalVisitors.toString());
+  }
+
+  visitorElement.innerText = totalVisitors.toLocaleString('id-ID');
 }
 
 document.addEventListener('DOMContentLoaded', () => {
